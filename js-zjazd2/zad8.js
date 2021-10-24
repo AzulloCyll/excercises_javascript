@@ -2,7 +2,7 @@
 //Based on numberof attempts choose a random number from table that many times and return lowest one.
 
 let arr = [1, 6, 23, 8, 4, 8, 3, 7]
-noOftimes = 4
+noOftimes = 6
 
 lowestNumber = (array, noOftimes) => {
   let resultArr = []
@@ -20,12 +20,10 @@ lowestNumber = (array, noOftimes) => {
       max = item
     }
   })
-  resultArr.reduce
   return max
 
   //or way b)
   //return Math.max(...resultArr)
 }
 
-console.log()
 console.log(lowestNumber(arr, noOftimes))
