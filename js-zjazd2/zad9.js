@@ -4,13 +4,13 @@
 let arr = [1, 6, 23, 8, 4, 8, 3, 7]
 
 randomElToNewArray = (array) => {
-	result = []
-	while (array.length) {
-		let randomNumber = Math.floor(Math.random() * array.length)
-		let deletedNumber = parseInt(array.splice(randomNumber, 1))
-		result.push(deletedNumber)
-	}
-	return result
+  result = []
+  while (array.length) {
+    let randomNumber = Math.floor(Math.random() * array.length)
+    let deletedNumber = parseInt(array.splice(randomNumber, 1))
+    result.push(deletedNumber)
+  }
+  return result
 }
 
 console.log(randomElToNewArray(arr))

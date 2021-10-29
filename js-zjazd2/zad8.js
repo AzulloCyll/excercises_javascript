@@ -5,25 +5,25 @@ let arr = [1, 6, 23, 8, 4, 8, 3, 7]
 noOftimes = 3
 
 lowestNumber = (array, noOftimes) => {
-	let resultArr = []
-	while (noOftimes) {
-		let randomNumber = Math.floor(Math.random() * arr.length)
-		resultArr.push(array[randomNumber])
-		noOftimes--
-	}
-	console.log(resultArr)
+  let resultArr = []
+  while (noOftimes) {
+    let randomNumber = Math.floor(Math.random() * arr.length)
+    resultArr.push(array[randomNumber])
+    noOftimes--
+  }
+  console.log(resultArr)
 
-	// way a)
-	let min = Infinity
-	resultArr.forEach((item) => {
-		if (item < min) {
-			min = item
-		}
-	})
-	return min
+  // way a)
+  let min = Infinity
+  resultArr.forEach((item) => {
+    if (item < min) {
+      min = item
+    }
+  })
+  return min
 
-	//or way b)
-	//return Math.min(...resultArr)
+  //or way b)
+  //return Math.min(...resultArr)
 }
 
 console.log(lowestNumber(arr, noOftimes))
