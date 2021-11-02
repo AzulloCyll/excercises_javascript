@@ -3,11 +3,7 @@
 arr = [1, 6, 23, 8, 4, 8, 3, 7]
 
 function sumOfFirstAndLastElementOfAnArray(array) {
-  let sum = 0
-  for (i = 0; i < array.length; i++) {
-    sum = arr[0] + array[array.length - 1]
-  }
-  return sum
+  return array[array.length - 1]
 }
 
 console.log(sumOfFirstAndLastElementOfAnArray(arr))
