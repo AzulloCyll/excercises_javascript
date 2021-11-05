@@ -6,18 +6,25 @@
 let result = (value) =>
   (function (copiedValue) {
     copiedValue = value
+
+    let setValue = (function (copiedValue) {
+      return copiedValue
+    })(copiedValue)
+
+    let showValue = (function (copiedValue) {
+      return copiedValue ? copiedValue : "Nie podano wartości"
+    })(copiedValue)
+
+    let reverseValue = (function (copiedValue) {
+      return typeof copiedValue === "string"
+        ? copiedValue.split("").reverse().join("")
+        : copiedValue * -1
+    })(copiedValue)
+
     return {
-      setValue: (setValue = (copiedValue) => {
-        return copiedValue
-      })(copiedValue),
-      showValue: (showValue = (copiedValue) => {
-        return copiedValue ? copiedValue : "Nie podano wartości"
-      })(copiedValue),
-      reverseValue: (reverseValue = (copiedValue) => {
-        return typeof copiedValue === "string"
-          ? copiedValue.split("").reverse().join("")
-          : copiedValue * -1
-      })(copiedValue),
+      setValue,
+      showValue,
+      reverseValue,
     }
   })(value)
 
@@ -27,20 +34,20 @@ console.log("Daniel Chmur", result("Daniel Chmur"))
 
 // MORE
 
-// let resultNull = result()
-// console.log(resultNull)
-// console.log(resultNull.setValue)
-// console.log(resultNull.showValue)
-// console.log(resultNull.reverseValue)
+let resultNull = result()
+console.log(resultNull)
+console.log(resultNull.setValue)
+console.log(resultNull.showValue)
+console.log(resultNull.reverseValue)
 
-// let result500 = result(500)
-// console.log(result500)
-// console.log(result500.setValue)
-// console.log(result500.showValue)
-// console.log(result500.reverseValue)
+let result500 = result(500)
+console.log(result500)
+console.log(result500.setValue)
+console.log(result500.showValue)
+console.log(result500.reverseValue)
 
-// let resultString = result("String")
-// console.log(resultString)
-// console.log(resultString.setValue)
-// console.log(resultString.showValue)
-// console.log(resultString.reverseValue)
+let resultString = result("Daniel Chmur")
+console.log(resultString)
+console.log(resultString.setValue)
+console.log(resultString.showValue)
+console.log(resultString.reverseValue)
