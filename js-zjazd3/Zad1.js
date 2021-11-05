@@ -7,19 +7,19 @@ let result = (value) =>
   (function (copiedValue) {
     copiedValue = value
 
-    let setValue = (function (copiedValue) {
+    let setValue = (function () {
       return copiedValue
-    })(copiedValue)
+    })()
 
-    let showValue = (function (copiedValue) {
+    let showValue = (function () {
       return copiedValue ? copiedValue : "Nie podano wartości"
-    })(copiedValue)
+    })()
 
-    let reverseValue = (function (copiedValue) {
+    let reverseValue = (function () {
       return typeof copiedValue === "string"
         ? copiedValue.split("").reverse().join("")
         : copiedValue * -1
-    })(copiedValue)
+    })()
 
     return {
       setValue,
