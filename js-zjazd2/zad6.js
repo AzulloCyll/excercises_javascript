@@ -1,5 +1,5 @@
 //For time of this example remove last element from the given array.
-//Create a function that basedon given array return new array in pattern[a, b, c, d, e] -> [a + b, c + d, e + e]
+//Create a function that based on given array return new array in pattern[a, b, c, d, e] -> [a + b, c + d, e + e]
 
 let arr = [1, 6, 23, 8, 4, 8, 3]
 
