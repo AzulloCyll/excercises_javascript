@@ -1,4 +1,4 @@
-// 3) Create an array(by hand) of objects and call sum() function in context of each one of them. Sum function is to come from this object BaseObject= {x,y, sum: function () {returnthis.x+this.y}}
+// 3) Create an array(by hand) of objects and call sum() function in context of each one of them. Sum function is to come from this object BaseObject = {x, y, sum: function () { return this.x + this.y }}
 
 let array = [
   { x: 2, y: 6 },
@@ -6,14 +6,17 @@ let array = [
   { x: 5, y: -5 },
 ]
 
-array.forEach((item) => {
-  let { x, y } = item
-  BaseObject = {
-    x,
-    y,
-    sum: function () {
-      return this.x + this.y
-    },
-  }
-  console.log(BaseObject.sum())
-})
+let x, y
+let [obj1, obj2, obj3] = array
+
+BaseObject = {
+  x,
+  y,
+  sum: function () {
+    return this.x + this.y
+  },
+}
+
+console.log(BaseObject.sum.call(obj1))
+console.log(BaseObject.sum.call(obj2))
+console.log(BaseObject.sum.call(obj3))
