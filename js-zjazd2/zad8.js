@@ -2,12 +2,17 @@
 //Based on numberof attempts choose a random number from table that many times and return lowest one.
 
 let arr = [1, 6, 23, 8, 4, 8, 3, 7]
-noOftimes = 3
+let noOftimes = 5
+
+//wynosic funkcjonalności jako utilsy
+let randomNumberGenerator = (max) => {
+  return Math.floor(Math.random() * max)
+}
 
 lowestNumber = (array, noOftimes) => {
   let resultArr = []
   while (noOftimes) {
-    let randomNumber = Math.floor(Math.random() * arr.length)
+    let randomNumber = randomNumberGenerator(arr.length)
     resultArr.push(array[randomNumber])
     noOftimes--
   }
