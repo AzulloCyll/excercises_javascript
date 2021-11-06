@@ -4,7 +4,7 @@
 let arr = [1, 6, 23, 8, 4, 8, 3, 7]
 let noOftimes = 5
 
-//wynosic funkcjonalności jako utilsy
+//wynosić funkcjonalności jako utilsy
 let randomNumberGenerator = (max) => {
   return Math.floor(Math.random() * max)
 }
