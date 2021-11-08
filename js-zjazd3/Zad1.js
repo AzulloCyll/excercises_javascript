@@ -25,9 +25,9 @@ let result = (value) =>
 		}
 	})(value)
 
-console.log("null", result())
-console.log(500, result(500))
-console.log("Daniel Chmur", result("Daniel Chmur"))
+console.log(result())
+console.log(result(500))
+console.log(result("Daniel Chmur"))
 
 // MORE
 
