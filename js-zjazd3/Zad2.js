@@ -5,7 +5,7 @@ let operations = {
   sub: (x, y) => x - y,
   mul: (x, y) => x * y,
   div: (x, y) => x / y,
-}
+};
 
 let calculation = (function (x, y) {
   let innerObject = {
@@ -16,18 +16,18 @@ let calculation = (function (x, y) {
     mathOperation: null,
     setOperation,
     calculate,
-  }
+  };
 
   function setOperation(mathOperation) {
-    this.mathOperation = mathOperation
+    this.mathOperation = mathOperation;
   }
 
   function calculate() {
-    return this.mathOperation(this.param.x, this.param.y)
+    return this.mathOperation(this.param.x, this.param.y);
   }
 
-  return innerObject
-})(6, 2)
+  return innerObject;
+})(6, 2);
 
-calculation.setOperation(operations.div)
-console.log(calculation.calculate())
+calculation.setOperation(operations.div);
+console.log(calculation.calculate());
