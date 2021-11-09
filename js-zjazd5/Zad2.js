@@ -1,8 +1,6 @@
-Object.assign(Number.prototype, {
-	reverse() {
-		return this * -1
-	},
-})
+Number.prototype.reverse = function () {
+	return this * -1
+}
 
 let number = 500
 

@@ -1,8 +1,6 @@
-Object.assign(String.prototype, {
-	reverse() {
-		return this.split("").reverse().join("")
-	},
-})
+String.prototype.reverse = function () {
+	return this.split("").reverse().join("")
+}
 
 let string = "Daniel Chmur"
 
