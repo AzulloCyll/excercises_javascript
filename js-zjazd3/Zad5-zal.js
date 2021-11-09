@@ -38,15 +38,14 @@ console.log("weighing ONE: setA & setB")
 if (sumA === sumB) {
 	//tworzy kolejne sety z kulkami losując elementy
 	let [setD, setE] = [[getNElements(setC, 1)], [getNElements(setC, 1)]]
-	console.log(`setA [${sumA}] = setB [${sumB}] => heavy ball must be in setC`)
+	console.log(`setA = setB => heavy ball must be in setC`)
 	console.log("New sets:")
 	console.log(`setD = [${setD}], setE = [${setE}]`)
 	console.log("weighing TWO: setD & setE")
-
 	if (setD > setE) {
-		console.log("!!! heavy ball is in set D !!!")
+		console.log("setD > setE => !!! heavy ball is in setD !!!")
 	} else {
-		console.log("!!! heavy ball is in set E !!!")
+		console.log("setD < setE => !!! heavy ball is in setE !!!")
 	}
 } else if (sumA > sumB) {
 	console.log(`setA > setB => heavy ball must be in setA`)
@@ -55,8 +54,31 @@ if (sumA === sumB) {
 		[getNElements(setA, 1)],
 		[getNElements(setA, 1)],
 	]
-
 	console.log("New sets:")
 	console.log(`setD = [${setD}], setE = [${setE}], setF = [${setF}]`)
-	/// dokonczyc
+	console.log("weighing TWO: setD & setE")
+	if (setD > setE) {
+		console.log("setD > setE => !!! heavy ball is in setD !!!")
+	} else if (setD < setE) {
+		console.log("setD < setE => !!! heavy ball is in setE !!!")
+	} else {
+		console.log("setD = setE !!! heavy ball is in setF !!!")
+	}
+} else if (sumA < sumB) {
+	console.log(`setA < setB => heavy ball must be in setB`)
+	let [setD, setE, setF] = [
+		[getNElements(setB, 1)],
+		[getNElements(setB, 1)],
+		[getNElements(setB, 1)],
+	]
+	console.log("New sets:")
+	console.log(`setD = [${setD}], setE = [${setE}], setF = [${setF}]`)
+	console.log("weighing TWO: setD & setE")
+	if (setD > setE) {
+		console.log("setD > setE => !!! heavy ball is in setD !!!")
+	} else if (setD < setE) {
+		console.log("setD < setE => !!! heavy ball is in setE !!!")
+	} else {
+		console.log("setD = setE !!! heavy ball is in setF !!!")
+	}
 }
