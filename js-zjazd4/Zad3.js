@@ -1,7 +1,12 @@
-let file = require("./Data.json")
+let fs = require("fs");
+let path = "C:/Users/LENOVO/Desktop/jsHomework/js-zjazd4/Data.json";
 
-function getJSON(file) {
-	return JSON.stringify(file)
-}
+console.log(path);
 
-console.log(getJSON(file))
+//wczytuje dane z pliku
+let loadedData = (function loadedData(path) {
+  let data = fs.readFileSync(path, "utf-8");
+  return JSON.parse(data);
+})(path);
+
+console.log(loadedData);
