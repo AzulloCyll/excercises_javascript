@@ -21,7 +21,7 @@ let mapData = (function (loadedData) {
 			})(element),
 			dateYear: ((element) => {
 				let date = element.detailsOfPayent.date.split("-")
-				return date[2]
+				return parseInt(date[2])
 			})(element),
 			dateMonth: ((element) => {
 				let date = element.detailsOfPayent.date.split("-")
@@ -44,7 +44,9 @@ let resultObject = (function (data) {
 	function spentIn2014() {
 		let sumOfCost = 0
 		data.forEach((item) => {
-			sumOfCost += Number(item.cost)
+			if (item.dateYear === 2014) {
+				sumOfCost += Number(item.cost)
+			}
 		})
 		sumOfCost = sumOfCost.toFixed(2)
 		return sumOfCost
@@ -53,3 +55,7 @@ let resultObject = (function (data) {
 })(data)
 
 console.log(resultObject.spentIn2014())
+
+let date = new Date("09-07-2014")
+
+console.log(date.getDay())
