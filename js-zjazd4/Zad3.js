@@ -45,7 +45,7 @@ let mapData = (function (loadedData) {
 
 let resultObject = (function (data) {
   innerObject = {
-    spentIn2014,
+    spentIn2014: spentIn2014(),
   };
   function spentIn2014() {
     let sumOfCost = 0;
@@ -59,3 +59,5 @@ let resultObject = (function (data) {
   }
   return innerObject;
 })(data);
+
+console.log(resultObject.spentIn2014);
