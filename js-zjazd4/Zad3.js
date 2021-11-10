@@ -1,12 +1,27 @@
-let fs = require("fs");
-let path = "C:/Users/LENOVO/Desktop/jsHomework/js-zjazd4/Data.json";
+let fs = require("fs")
+let path = "C:/Users/dchmur/Desktop/jsHomework/js-zjazd4/Data.json"
 
-console.log(path);
+console.log(path)
 
 //wczytuje dane z pliku
-let loadedData = (function loadedData(path) {
-  let data = fs.readFileSync(path, "utf-8");
-  return JSON.parse(data);
-})(path);
+let loadedData = (function loadData(path) {
+	return JSON.parse(fs.readFileSync(path, "utf-8"))
+})(path)
 
-console.log(loadedData);
+let data = []
+
+let mapData = (function (loadedData) {
+	data = loadedData.map((element) => {
+		obj = {
+			index: element.index,
+			_id: element._id,
+			company: ((element) => {
+				return element.detailsOfPayent.company.toLowerCase()
+			})(element),
+		}
+		return obj
+	})
+})(loadedData)
+
+console.log(loadedData[0])
+console.log(data[0])
