@@ -14,14 +14,42 @@ let mapData = (function (loadedData) {
 	data = loadedData.map((element) => {
 		obj = {
 			index: element.index,
-			_id: element._id,
+			// _id: element._id,
+			cost: element.cost,
 			company: ((element) => {
 				return element.detailsOfPayent.company.toLowerCase()
+			})(element),
+			dateYear: ((element) => {
+				let date = element.detailsOfPayent.date.split("-")
+				return date[2]
+			})(element),
+			dateMonth: ((element) => {
+				let date = element.detailsOfPayent.date.split("-")
+				return date[1]
+			})(element),
+			dateDay: ((element) => {
+				let date = element.detailsOfPayent.date.split("-")
+				return date[0]
 			})(element),
 		}
 		return obj
 	})
+	return data
 })(loadedData)
 
-console.log(loadedData[0])
-console.log(data[0])
+let resultObject = (function (data) {
+	innerObject = {
+		spentIn2014,
+	}
+	function spentIn2014() {
+		let sumOfCost = 0
+		data.forEach((item) => {
+			sumOfCost += Number(item.cost)
+		})
+		sumOfCost = sumOfCost.toFixed(2)
+		return sumOfCost
+	}
+	return innerObject
+})(data)
+
+console.log(resultObject.spentIn2014())
