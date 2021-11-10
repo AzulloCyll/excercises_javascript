@@ -8,12 +8,13 @@ let loadedData = (function loadData(path) {
   return JSON.parse(fs.readFileSync(path, "utf-8"));
 })(path);
 
+// utworzenie drugiej struktury danych???
 let data = [];
 
-//mapowanie danych
+// mapowanie danych
 let mapData = (function (loadedData) {
   data = loadedData.map((element) => {
-    obj = {
+    let obj = {
       index: element.index,
       // _id: element._id,
       cost: element.cost,
@@ -28,9 +29,13 @@ let mapData = (function (loadedData) {
         let date = element.detailsOfPayent.date.split("-");
         return date[1];
       })(element),
-      dateDay: ((element) => {
+      dateDayOfTheWeek: ((element) => {
         let date = element.detailsOfPayent.date.split("-");
-        return date[0];
+        let day = date[0];
+        let month = date[1];
+        let year = date[2];
+        let dayOfMonth = new Date(month, day, year);
+        return dayOfMonth.getDay();
       })(element),
     };
     return obj;
@@ -54,9 +59,3 @@ let resultObject = (function (data) {
   }
   return innerObject;
 })(data);
-
-console.log(resultObject.spentIn2014());
-
-let date = new Date("09-07-2014");
-
-console.log(date.getDay());
