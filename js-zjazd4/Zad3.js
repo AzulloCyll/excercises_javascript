@@ -128,13 +128,13 @@ let resultObject = (function (data) {
     months = [...new Set(months)].sort((a, b) => a - b);
 
     for (let month of months) {
-      letMonthSpendings = 0;
+      let MonthSpendings = 0;
       for (let item of data) {
         if (item.dateMonth === month) {
-          letMonthSpendings += Number(item.cost);
+          MonthSpendings += Number(item.cost);
         }
       }
-      spendings.push(letMonthSpendings.toFixed(2));
+      spendings.push(MonthSpendings.toFixed(2));
     }
 
     let result = {};
