@@ -1,4 +1,5 @@
 let fs = require("fs");
+const { off } = require("process");
 let path = "C:/Users/LENOVO/Desktop/jsHomework/js-zjazd4/Data.json";
 
 //wczytuje dane z pliku
@@ -39,23 +40,21 @@ let data = loadedData.map((t) => {
     t.index,
     t.cost,
     t.detailsOfPayent,
+    t.type,
     t.dateYear,
     t.dateMonth,
     t.dateDayOfTheWeek
   );
 });
 
-console.log(data[0]);
-console.log(data[0].date);
-console.log(data[0].dateYear);
-console.log(data[0].dateMonth);
-console.log(data[0].dateDayOfTheWeek);
-
 let resultObject = (function (data) {
   innerObject = {
     spentIn2014: spentIn2014(),
     companiesEarns: companiesEarns(),
+    mostSpendingType: mostSpendingType(),
+    spendingsInMonth: spendingsInMonth(),
   };
+
   function spentIn2014() {
     let sumOfCost = 0;
     data.forEach((item) => {
@@ -66,6 +65,7 @@ let resultObject = (function (data) {
     sumOfCost = sumOfCost.toFixed(2);
     return sumOfCost;
   }
+
   function companiesEarns() {
     let companies = [];
     let earnings = [];
@@ -89,11 +89,65 @@ let resultObject = (function (data) {
     companies.forEach(function (key, i) {
       result[key] = earnings[i];
     });
-
     return result;
   }
+
+  function mostSpendingType() {
+    let types = [];
+    let spendings = [];
+    data.forEach((item) => {
+      types.push(item.type);
+    });
+    types = [...new Set(types)];
+
+    let typeSpendings = 0;
+    types.forEach((type) => {
+      data.forEach((item) => {
+        if (item.type === type) {
+          typeSpendings += Number(item.cost);
+        }
+      });
+      spendings.push(typeSpendings.toFixed(2));
+    });
+
+    let result = {};
+    types.forEach(function (key, i) {
+      result[key] = spendings[i];
+    });
+    return result;
+  }
+
+  function spendingsInMonth() {
+    let months = [];
+    let spendings = [];
+
+    for (let item of data) {
+      months.push(item.dateMonth);
+    }
+
+    months = [...new Set(months)].sort((a, b) => a - b);
+
+    for (let month of months) {
+      letMonthSpendings = 0;
+      for (let item of data) {
+        if (item.dateMonth === month) {
+          letMonthSpendings += Number(item.cost);
+        }
+      }
+      spendings.push(letMonthSpendings.toFixed(2));
+    }
+
+    let result = {};
+    months.forEach(function (key, i) {
+      result[key] = spendings[i];
+    });
+    return result;
+  }
+
   return innerObject;
 })(data);
 
-console.log("Wydatki w roku 2014:", resultObject.spentIn2014);
-console.log("Poszczególne firmy zarobiły:", resultObject.companiesEarns);
+console.log("Spendings in 2014:", resultObject.spentIn2014);
+console.log("Companies earnings", resultObject.companiesEarns);
+console.log("Spendings by type:", resultObject.mostSpendingType);
+console.log("Spendings by month:", resultObject.spendingsInMonth);
