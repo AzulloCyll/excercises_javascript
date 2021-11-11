@@ -23,6 +23,15 @@ function Transaction(index, cost, detailsOfPayent) {
     let currentYear = date.split("-")[1];
     return parseInt(currentYear);
   })(date);
+  this.dateDayOfTheWeek = (function (date) {
+    let datecurrentDate = date.split("-");
+    let day = datecurrentDate[0];
+    let month = datecurrentDate[1];
+    let year = datecurrentDate[2];
+    let dateResult = new Date(year, month - 1, day);
+    // 0 is sunday
+    return dateResult.getDay();
+  })(date);
 }
 
 let data = loadedData.map((t) => {
@@ -31,47 +40,16 @@ let data = loadedData.map((t) => {
     t.cost,
     t.detailsOfPayent,
     t.dateYear,
-    t.dateMonth
+    t.dateMonth,
+    t.dateDayOfTheWeek
   );
 });
 
-console.log(data[5]);
-console.log(data[5].date);
-console.log(data[5].dateYear);
-console.log(data[5].dateMonth);
-
-// // mapowanie danych
-// let mapData = (function (loadedData) {
-//   data = loadedData.map((element) => {
-//     let obj = {
-//       index: element.index,
-//       // _id: element._id,
-//       cost: element.cost,
-//       company: ((element) => {
-//         return element.detailsOfPayent.company.toLowerCase();
-//       })(element),
-//       dateYear: ((element) => {
-//         let date = element.detailsOfPayent.date.split("-");
-//         return parseInt(date[2]);
-//       })(element),
-//       dateMonth: ((element) => {
-//         let date = element.detailsOfPayent.date.split("-");
-//         return date[1];
-//       })(element),
-//       dateDayOfTheWeek: ((element) => {
-//         let date = element.detailsOfPayent.date.split("-");
-//         let day = date[0];
-//         let month = date[1];
-//         let year = date[2];
-//         let dateResult = new Date(year, month - 1, day);
-//         // 0 is sunday
-//         return dateResult.getDay();
-//       })(element),
-//     };
-//     return obj;
-//   });
-//   return data;
-// })(loadedData);
+console.log(data[0]);
+console.log(data[0].date);
+console.log(data[0].dateYear);
+console.log(data[0].dateMonth);
+console.log(data[0].dateDayOfTheWeek);
 
 let resultObject = (function (data) {
   innerObject = {
