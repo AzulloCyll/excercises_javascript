@@ -34,8 +34,9 @@ let mapData = (function (loadedData) {
         let day = date[0];
         let month = date[1];
         let year = date[2];
-        let dayOfMonth = new Date(month, day, year);
-        return dayOfMonth.getDay();
+        let dateResult = new Date(year, month - 1, day);
+        // 0 is sunday
+        return dateResult.getDay();
       })(element),
     };
     return obj;
@@ -61,3 +62,4 @@ let resultObject = (function (data) {
 })(data);
 
 console.log(resultObject.spentIn2014);
+console.log(data[0].dateDayOfTheWeek);
