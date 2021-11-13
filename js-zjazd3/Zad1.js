@@ -23,7 +23,7 @@ let result = (value) =>
       showValue,
       reverseValue,
     };
-  })(value);
+  })();
 
 console.log(result());
 console.log(result(500));
