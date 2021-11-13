@@ -11,7 +11,7 @@ let getElement = function (array) {
   return randomElement;
 };
 
-// tworzy macierz z trzech zabranych elementów
+// tworzy macierz z n zabranych elementów
 function getNElements(array, n) {
   let result = [];
   for (i = 0; i < n; i++) {
@@ -37,7 +37,7 @@ console.log("weighing ONE: setA & setB");
 
 if (sumA === sumB) {
   //tworzy kolejne sety z kulkami losując elementy
-  let [setD, setE] = [[getNElements(setC, 1)], [getNElements(setC, 1)]];
+  let [setD, setE] = [getNElements(setC, 1), getNElements(setC, 1)];
   console.log(`setA = setB => heavy ball must be in setC`);
   console.log("New sets:");
   console.log(`setD = [${setD}], setE = [${setE}]`);
