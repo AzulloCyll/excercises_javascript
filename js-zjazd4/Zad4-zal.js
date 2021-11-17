@@ -231,8 +231,8 @@ let hand = [
 
 deck1.showReMappedCards(hand);
 console.log("--------------------");
-deck1.checkForFlush(hand);
 deck1.checkForFullHouse(hand);
+deck1.checkForFlush(hand);
 deck1.checkForStraight(hand);
 deck1.checkForThree(hand);
 deck1.checkForTwoPairs(hand);
