@@ -1,10 +1,5 @@
-let fs = require("fs");
-let path = "C:/Users/LENOVO/Desktop/jsHomework/js-zjazd4/Data.json";
-
 //wczytuje dane z pliku
-let loadedData = (function loadData(path) {
-  return JSON.parse(fs.readFileSync(path, "utf-8"));
-})(path);
+let loadedData = require("./Data.json");
 
 // utworzenie drugiej struktury danych
 function Transaction(index, cost, detailsOfPayent) {
@@ -24,10 +19,10 @@ function Transaction(index, cost, detailsOfPayent) {
     return parseInt(currentYear);
   })(date);
   this.dateDayOfTheWeek = (function (date) {
-    let datecurrentDate = date.split("-");
-    let day = datecurrentDate[0];
-    let month = datecurrentDate[1];
-    let year = datecurrentDate[2];
+    let currentDate = date.split("-");
+    let day = currentDate[0];
+    let month = currentDate[1];
+    let year = currentDate[2];
     let dateResult = new Date(year, month - 1, day);
     // 0 is Sunday
     return dateResult.getDay();
