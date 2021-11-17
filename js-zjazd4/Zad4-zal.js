@@ -72,7 +72,7 @@ class Deck {
 
   // funkcja mapująca do wyniku
   remapValues(array) {
-    array = array.map(item => {
+    array = array.map((item) => {
       if (item === 1) {
         return "Ace";
       } else if (item === 11) {
@@ -103,6 +103,7 @@ class Deck {
   }
 
   checkForThree(hand) {
+    hand.sort((a, b) => a.value - b.value);
     let test = [];
     for (let i = 0; i < 3; i++) {
       if (
@@ -120,6 +121,7 @@ class Deck {
   }
 
   checkForTwoPairs(hand) {
+    hand.sort((a, b) => a.value - b.value);
     let test = [];
     for (let i = 0; i < 4; i++) {
       if (hand[i].value === hand[i + 1].value) {
@@ -135,6 +137,7 @@ class Deck {
   }
 
   checkForFullHouse(hand) {
+    hand.sort((a, b) => a.value - b.value);
     let test = [];
     for (let i = 0; i < 3; i++) {
       if (
@@ -164,7 +167,7 @@ class Deck {
   checkForStraight(hand) {
     let test = [];
     let ace = [];
-    // poprawka na asy - jesli jest as na pierwszej pozycji, a na drugiej nie jest 2 
+    // poprawka na asy - jesli jest as na pierwszej pozycji, a na drugiej nie jest 2
     // to wydziel asa do innej tablicy, aby dodać go potem na końcu tablicy test
     for (let i = 0; i < 4; i++) {
       if (hand[i].value === 1 && hand[i + 1].value !== 2) {
@@ -179,9 +182,24 @@ class Deck {
     // dodaje ostatnią wartość tablicy (bo pętla wykonuje sie tylko 4 razy)
     test.push(hand[4].value);
     // dodanie asa z tablicy ace
-    if (ace.length) { test.push(parseInt(ace)); }
+    if (ace.length) {
+      test.push(parseInt(ace));
+    }
     if (test.length === 5) {
       console.log(`You have straight!`);
+    }
+  }
+
+  checkForFlush(hand) {
+    let test = [];
+    hand.sort((a, b) => a.color - b.color);
+    hand.forEach((card) => {
+      test.push(card.color);
+    });
+    test = [...new Set(test)];
+    console.log(test);
+    if (test.length === 1) {
+      console.log(`You have flush of ${test[0]}`);
     }
   }
 }
@@ -190,32 +208,32 @@ const deck1 = new Deck();
 
 let hand = [
   {
-    value: 3,
+    value: 1,
     color: 2,
   },
   {
     value: 12,
-    color: 3,
+    color: 2,
   },
   {
-    value: 12,
-    color: 1,
+    value: 5,
+    color: 2,
   },
   {
-    value: 1,
-    color: 4,
+    value: 3,
+    color: 2,
   },
   {
-    value: 12,
+    value: 8,
     color: 2,
   },
 ];
 
 deck1.showReMappedCards(hand);
 console.log("-------------------");
+deck1.checkForFlush(hand);
 deck1.checkForFullHouse(hand);
 deck1.checkForStraight(hand);
 deck1.checkForThree(hand);
 deck1.checkForTwoPairs(hand);
 deck1.checkForPair(hand);
-
