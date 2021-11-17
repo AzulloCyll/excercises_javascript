@@ -230,7 +230,7 @@ let hand = [
 ];
 
 deck1.showReMappedCards(hand);
-console.log("-------------------");
+console.log("--------------------");
 deck1.checkForFlush(hand);
 deck1.checkForFullHouse(hand);
 deck1.checkForStraight(hand);
