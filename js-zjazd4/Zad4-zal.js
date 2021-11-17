@@ -202,11 +202,11 @@ let hand = [
     color: 1,
   },
   {
-    value: 12,
+    value: 1,
     color: 4,
   },
   {
-    value: 1,
+    value: 12,
     color: 2,
   },
 ];
@@ -218,7 +218,4 @@ deck1.checkForStraight(hand);
 deck1.checkForThree(hand);
 deck1.checkForTwoPairs(hand);
 deck1.checkForPair(hand);
-
-
-
 
