@@ -164,7 +164,7 @@ let hand = [
 // hand = deck1.deal5Cards();
 
 deck1.showReMappedCards(hand);
-console.log("------------------");
+console.log("-------------------");
 deck1.checkForFullHouse(hand);
 deck1.checkForTwoPairs(hand);
 deck1.checkForThree(hand);
