@@ -43,7 +43,7 @@ class Deck {
       let ace = hand.shift();
       hand.push(ace);
     }
-    // SZTUCZKA [...nie działało - bo robilo inną referencje na macierz, ale na obiekty zostawała referencja]
+    // SZTUCZKA [...spread nie działało - bo robilo inną referencje na macierz, ale na obiekty zostawała referencja]
     let clonedHand = JSON.parse(JSON.stringify(hand));
     clonedHand.map((card) => {
       if (card.color === 1) {
@@ -70,7 +70,40 @@ class Deck {
     this.showHand(clonedHand);
   }
 
-  // funkcja mapująca do wyniku
+  // funkcja mapująca values do wyniku
+  remapValues(array) {
+    array = array.map((item) => {
+      if (item === 1) {
+        return "Ace";
+      } else if (item === 2) {
+        return "Jack";
+      } else if (item === 3) {
+        return "Queen";
+      } else if (item === 4) {
+        return "King";
+      } else {
+        return item;
+      }
+    });
+    return array;
+  }
+
+  // funkcja mapująca colors do wyniku
+  remapColors(array) {
+    array = array.map((item) => {
+      if (item === 1) {
+        return "Clubs";
+      } else if (item === 2) {
+        return "Diamonds";
+      } else if (item === 3) {
+        return "Spades";
+      } else if (item === 4) {
+        return "Hearts";
+      }
+    });
+    return array;
+  }
+  // funkcja mapująca values do wyniku
   remapValues(array) {
     array = array.map((item) => {
       if (item === 1) {
@@ -198,6 +231,7 @@ class Deck {
       test.push(card.color);
     });
     test = [...new Set(test)];
+    test = this.remapColors(test);
     if (test.length === 1) {
       console.log(`You have flush of ${test[0]}`);
     }
@@ -208,9 +242,11 @@ class Deck {
     let test = [];
     hand.sort((a, b) => a.value - b.value);
     for (let i = 0; i < 2; i++) {
-      if (hand[i].value === hand[i + 1].value
-        && hand[i + 1].value === hand[i + 2].value
-        && hand[i + 2].value === hand[i + 3].value) {
+      if (
+        hand[i].value === hand[i + 1].value &&
+        hand[i + 1].value === hand[i + 2].value &&
+        hand[i + 2].value === hand[i + 3].value
+      ) {
         test.push(hand[i].value);
       }
     }
@@ -220,35 +256,71 @@ class Deck {
     }
     return test;
   }
+
+  checkForStraightFlush(hand) {
+    let test = [];
+    let test1 = [];
+    let ace = [];
+    hand.sort((a, b) => a.value - b.value);
+    // poprawka na asy - jesli jest as na pierwszej pozycji, a na drugiej nie jest 2
+    // to wydziel asa do innej tablicy, aby dodać go potem na końcu tablicy test
+    for (let i = 0; i < 4; i++) {
+      if (hand[i].value === 1 && hand[i + 1].value !== 2) {
+        ace.push(hand[i].value);
+      }
+    }
+    for (let i = 0; i < 4; i++) {
+      if (hand[i].value === hand[i + 1].value - 1) {
+        test.push(hand[i].value);
+      }
+    }
+    // dodaje ostatnią wartość tablicy (bo pętla wykonuje sie tylko 4 razy)
+    test.push(hand[4].value);
+    // dodanie asa z tablicy ace
+    if (ace.length) {
+      test.push(parseInt(ace));
+    }
+
+    hand.sort((a, b) => a.color - b.color);
+    hand.forEach((card) => {
+      test1.push(card.color);
+    });
+    test1 = [...new Set(test1)];
+    test1 = this.remapColors(test1);
+    if (test.length === 5 && test1.length === 1) {
+      console.log(`You have straight flush of ${test1[0]}!`);
+    }
+  }
 }
 
 const deck1 = new Deck();
 
 let hand = [
   {
-    value: 3,
+    value: 8,
     color: 1,
   },
   {
-    value: 3,
-    color: 2,
+    value: 10,
+    color: 1,
   },
   {
-    value: 2,
-    color: 3,
+    value: 12,
+    color: 1,
   },
   {
-    value: 3,
-    color: 4,
+    value: 11,
+    color: 1,
   },
   {
-    value: 2,
+    value: 9,
     color: 1,
   },
 ];
 
 deck1.showReMappedCards(hand);
 console.log("--------------------");
+deck1.checkForStraightFlush(hand);
 deck1.checkForFour(hand);
 deck1.checkForFullHouse(hand);
 deck1.checkForFlush(hand);
