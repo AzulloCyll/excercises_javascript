@@ -167,6 +167,7 @@ class Deck {
   checkForStraight(hand) {
     let test = [];
     let ace = [];
+    hand.sort((a, b) => a.value - b.value);
     // poprawka na asy - jesli jest as na pierwszej pozycji, a na drugiej nie jest 2
     // to wydziel asa do innej tablicy, aby dodać go potem na końcu tablicy test
     for (let i = 0; i < 4; i++) {
@@ -197,10 +198,27 @@ class Deck {
       test.push(card.color);
     });
     test = [...new Set(test)];
-    console.log(test);
     if (test.length === 1) {
       console.log(`You have flush of ${test[0]}`);
     }
+    return test;
+  }
+
+  checkForFour(hand) {
+    let test = [];
+    hand.sort((a, b) => a.value - b.value);
+    for (let i = 0; i < 2; i++) {
+      if (hand[i].value === hand[i + 1].value
+        && hand[i + 1].value === hand[i + 2].value
+        && hand[i + 2].value === hand[i + 3].value) {
+        test.push(hand[i].value);
+      }
+    }
+    test = this.remapValues(test);
+    if (test[0]) {
+      console.log(`You have Quads: 4x ${test[0]}`);
+    }
+    return test;
   }
 }
 
@@ -208,29 +226,30 @@ const deck1 = new Deck();
 
 let hand = [
   {
-    value: 1,
-    color: 2,
-  },
-  {
-    value: 12,
-    color: 2,
-  },
-  {
-    value: 5,
-    color: 2,
+    value: 3,
+    color: 1,
   },
   {
     value: 3,
     color: 2,
   },
   {
-    value: 8,
-    color: 2,
+    value: 2,
+    color: 3,
+  },
+  {
+    value: 3,
+    color: 4,
+  },
+  {
+    value: 2,
+    color: 1,
   },
 ];
 
 deck1.showReMappedCards(hand);
 console.log("--------------------");
+deck1.checkForFour(hand);
 deck1.checkForFullHouse(hand);
 deck1.checkForFlush(hand);
 deck1.checkForStraight(hand);
