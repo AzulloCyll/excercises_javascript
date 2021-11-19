@@ -313,7 +313,7 @@ let hand = [
     color: 1,
   },
   {
-    value: 9,
+    value: 8,
     color: 1,
   },
 ];
