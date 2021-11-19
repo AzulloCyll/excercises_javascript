@@ -131,8 +131,8 @@ class Deck {
     test = this.remapValues(test);
     if (test[0]) {
       console.log(`You have Pair: 2x ${test[0]}`);
+      return true;
     }
-    return test;
   }
 
   checkForThree(hand) {
@@ -149,8 +149,8 @@ class Deck {
     test = this.remapValues(test);
     if (test[0]) {
       console.log(`You have Three: 3x ${test[0]}`);
+      return true;
     }
-    return test;
   }
 
   checkForTwoPairs(hand) {
@@ -165,36 +165,28 @@ class Deck {
     test = [...new Set(test)];
     if (test[0] && test[1]) {
       console.log(`You have two Pairs: 2x ${test[0]} and 2x ${test[1]}`);
+      return true;
     }
-    return test;
   }
 
   checkForFullHouse(hand) {
-    hand.sort((a, b) => a.value - b.value);
     let test = [];
-    for (let i = 0; i < 3; i++) {
-      if (
-        hand[i].value === hand[i + 1].value &&
-        hand[i + 1].value === hand[i + 2].value
-      ) {
-        test.push(hand[i].value);
-        //usuwa z tablicy trójkę
-        hand.slice(i, 3);
-      }
+    hand.sort((a, b) => {
+      a.value - b.value;
+    });
+    if (hand[0].value === hand[1].value && hand[1].value === hand[2].value && hand[3].value === hand[4].value) {
+      test.push(hand[0].value);
+      test.push(hand[3].value);
+    } else if (hand[0].value === hand[1].value && hand[2].value === hand[3].value && hand[3].value === hand[4].value) {
+      test.push(hand[2].value);
+      test.push(hand[0].value);
     }
-    // i sprawdza czy jest jeszcze para
-    for (let i = 0; i < hand.length - 1; i++) {
-      if (hand[i].value === hand[i + 1].value) {
-        test.push(hand[i].value);
-      }
+    test = this.remapValues(test);
+    if (test.length === 2) {
+      console.log(`You have Full House: 3x ${test[0]} and 2x ${test[1]}`);
+      return true;
     }
 
-    test = [...new Set(test)];
-    test = this.remapValues(test);
-    if (test[0] && test[1]) {
-      console.log(`You have Full House: 3x ${test[0]} and 2x ${test[1]}`);
-    }
-    return test;
   }
 
   checkForStraight(hand) {
@@ -220,7 +212,8 @@ class Deck {
       test.push(parseInt(ace));
     }
     if (test.length === 5) {
-      console.log(`You have straight!`);
+      console.log(`You have Straight!`);
+      return true;
     }
   }
 
@@ -233,9 +226,9 @@ class Deck {
     test = [...new Set(test)];
     test = this.remapColors(test);
     if (test.length === 1) {
-      console.log(`You have flush of ${test[0]}`);
+      console.log(`You have Flush of ${test[0]}`);
+      return true;
     }
-    return test;
   }
 
   checkForFour(hand) {
@@ -253,11 +246,35 @@ class Deck {
     test = this.remapValues(test);
     if (test[0]) {
       console.log(`You have Quads: 4x ${test[0]}`);
+      return true;
     }
-    return test;
   }
 
   checkForStraightFlush(hand) {
+    let test = [];
+    let test1 = [];
+    hand.sort((a, b) => a.value - b.value);
+    for (let i = 0; i < 4; i++) {
+      if (hand[i].value === hand[i + 1].value - 1) {
+        test.push(hand[i].value);
+      }
+    }
+    // dodaje ostatnią wartość tablicy (bo pętla wykonuje sie tylko 4 razy)
+    test.push(hand[4].value);
+
+    hand.sort((a, b) => a.color - b.color);
+    hand.forEach((card) => {
+      test1.push(card.color);
+    });
+    test1 = [...new Set(test1)];
+    test1 = this.remapColors(test1);
+    if (test.length === 5 && test1.length === 1) {
+      console.log(`You have Straight Flush of ${test1[0]}!`);
+      return true;
+    }
+  }
+
+  checkForRoyalFlush(hand) {
     let test = [];
     let test1 = [];
     let ace = [];
@@ -287,9 +304,27 @@ class Deck {
     });
     test1 = [...new Set(test1)];
     test1 = this.remapColors(test1);
-    if (test.length === 5 && test1.length === 1) {
-      console.log(`You have straight flush of ${test1[0]}!`);
+    if ((test.length === 5 && test1.length === 1) && test[4] === 1) {
+      console.log(`You have Royal Flush of ${test1[0]}!`);
+      return true;
     }
+  }
+
+  checkForHighCard(hand) {
+    let test = [];
+    let test1 = [];
+    hand.sort((a, b) => { a.value - b.value; });
+    // przerzucam asa na koniec tablicy
+    if (hand[0].value === 1) {
+      let ace = hand.shift();
+      hand.push(ace);
+    }
+    test.push(hand[4].value);
+    hand.sort((a, b) => { a.color - b.color; });
+    test1.push(hand[4].color);
+    test = this.remapValues(test);
+    test1 = this.remapColors(test1);
+    console.log(`You have High Card: ${test[0]} of ${test1[0]}`);
   }
 }
 
@@ -297,34 +332,44 @@ const deck1 = new Deck();
 
 let hand = [
   {
-    value: 8,
+    value: 1,
     color: 1,
   },
   {
-    value: 10,
-    color: 1,
+    value: 3,
+    color: 2,
   },
   {
-    value: 12,
-    color: 1,
+    value: 3,
+    color: 3,
   },
   {
-    value: 11,
-    color: 1,
+    value: 3,
+    color: 2,
   },
   {
-    value: 9,
-    color: 1,
+    value: 1,
+    color: 4,
   },
 ];
 
+// let hand = deck1.deal5Cards();
+
 deck1.showReMappedCards(hand);
 console.log("--------------------");
-deck1.checkForStraightFlush(hand);
-deck1.checkForFour(hand);
-deck1.checkForFullHouse(hand);
-deck1.checkForFlush(hand);
-deck1.checkForStraight(hand);
-deck1.checkForThree(hand);
-deck1.checkForTwoPairs(hand);
-deck1.checkForPair(hand);
+
+if (deck1.checkForRoyalFlush(hand)) { return; }
+else if (deck1.checkForStraightFlush(hand)) { return; }
+else if (deck1.checkForFour(hand)) { return; }
+else if (deck1.checkForFullHouse(hand)) { return; }
+else if (deck1.checkForFlush(hand)) { return; }
+else if (deck1.checkForStraight(hand)) { return; }
+else if (deck1.checkForThree(hand)) { return; }
+else if (deck1.checkForTwoPairs(hand)) { return; }
+else if (deck1.checkForPair(hand)) { return; }
+else if (deck1.checkForHighCard(hand)) { return; }
+
+/// flush nie działa
+
+
+
