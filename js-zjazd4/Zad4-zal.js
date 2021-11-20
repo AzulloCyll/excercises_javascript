@@ -174,10 +174,21 @@ class Deck {
     hand.sort((a, b) => {
       a.value - b.value;
     });
-    if (hand[0].value === hand[1].value && hand[1].value === hand[2].value && hand[3].value === hand[4].value) {
+
+    if (
+      // jeśli pierwsza będzie trójka
+      hand[0].value === hand[1].value &&
+      hand[1].value === hand[2].value &&
+      hand[3].value === hand[4].value
+    ) {
       test.push(hand[0].value);
       test.push(hand[3].value);
-    } else if (hand[0].value === hand[1].value && hand[2].value === hand[3].value && hand[3].value === hand[4].value) {
+    } else if (
+      //jeśli pierwsza będzie para
+      hand[0].value === hand[1].value &&
+      hand[2].value === hand[3].value &&
+      hand[3].value === hand[4].value
+    ) {
       test.push(hand[2].value);
       test.push(hand[0].value);
     }
@@ -186,7 +197,6 @@ class Deck {
       console.log(`You have Full House: 3x ${test[0]} and 2x ${test[1]}`);
       return true;
     }
-
   }
 
   checkForStraight(hand) {
@@ -196,7 +206,11 @@ class Deck {
     // poprawka na asy - jesli jest as na pierwszej pozycji, a na drugiej nie jest 2
     // to wydziel asa do innej tablicy, aby dodać go potem na końcu tablicy test
     for (let i = 0; i < 4; i++) {
-      if (hand[i].value === 1 && hand[i + 1].value !== 2) {
+      if (
+        hand[i].value === 1 &&
+        hand[i + 1].value !== 2 &&
+        hand[i + 1].value === 10
+      ) {
         ace.push(hand[i].value);
       }
     }
@@ -256,7 +270,7 @@ class Deck {
     hand.sort((a, b) => a.value - b.value);
     for (let i = 0; i < 4; i++) {
       if (hand[i].value === hand[i + 1].value - 1) {
-        test.push(hand[i].value);
+        test.push(hand[i].value && hand[i + 1].value === 10);
       }
     }
     // dodaje ostatnią wartość tablicy (bo pętla wykonuje sie tylko 4 razy)
@@ -304,7 +318,7 @@ class Deck {
     });
     test1 = [...new Set(test1)];
     test1 = this.remapColors(test1);
-    if ((test.length === 5 && test1.length === 1) && test[4] === 1) {
+    if (test.length === 5 && test1.length === 1 && test[4] === 1) {
       console.log(`You have Royal Flush of ${test1[0]}!`);
       return true;
     }
@@ -313,14 +327,18 @@ class Deck {
   checkForHighCard(hand) {
     let test = [];
     let test1 = [];
-    hand.sort((a, b) => { a.value - b.value; });
+    hand.sort((a, b) => {
+      a.value - b.value;
+    });
     // przerzucam asa na koniec tablicy
     if (hand[0].value === 1) {
       let ace = hand.shift();
       hand.push(ace);
     }
     test.push(hand[4].value);
-    hand.sort((a, b) => { a.color - b.color; });
+    hand.sort((a, b) => {
+      a.color - b.color;
+    });
     test1.push(hand[4].color);
     test = this.remapValues(test);
     test1 = this.remapColors(test1);
@@ -330,51 +348,52 @@ class Deck {
 
 const deck1 = new Deck();
 
-let hand = [
-  {
-    value: 1,
-    color: 1,
-  },
-  {
-    value: 3,
-    color: 2,
-  },
-  {
-    value: 3,
-    color: 3,
-  },
-  {
-    value: 3,
-    color: 2,
-  },
-  {
-<<<<<<< HEAD
-    value: 1,
-    color: 4,
-=======
-    value: 8,
-    color: 1,
->>>>>>> 029d1d891f430a77a4e4741ec47a2efbda48bac5
-  },
-];
+// let hand = [
+//   {
+//     value: 5,
+//     color: 4,
+//   },
+//   {
+//     value: 10,
+//     color: 4,
+//   },
+//   {
+//     value: 12,
+//     color: 4,
+//   },
+//   {
+//     value: 11,
+//     color: 4,
+//   },
+//   {
+//     value: 13,
+//     color: 4,
+//   },
+// ];
 
-// let hand = deck1.deal5Cards();
+let hand = deck1.deal5Cards();
 
 deck1.showReMappedCards(hand);
 console.log("--------------------");
 
-if (deck1.checkForRoyalFlush(hand)) { return; }
-else if (deck1.checkForStraightFlush(hand)) { return; }
-else if (deck1.checkForFour(hand)) { return; }
-else if (deck1.checkForFullHouse(hand)) { return; }
-else if (deck1.checkForFlush(hand)) { return; }
-else if (deck1.checkForStraight(hand)) { return; }
-else if (deck1.checkForThree(hand)) { return; }
-else if (deck1.checkForTwoPairs(hand)) { return; }
-else if (deck1.checkForPair(hand)) { return; }
-else if (deck1.checkForHighCard(hand)) { return; }
-
-/// flush nie działa
-
-
-
+if (deck1.checkForRoyalFlush(hand)) {
+  return;
+} else if (deck1.checkForStraightFlush(hand)) {
+  return;
+} else if (deck1.checkForFour(hand)) {
+  return;
+} else if (deck1.checkForFullHouse(hand)) {
+  return;
+} else if (deck1.checkForFlush(hand)) {
+  return;
+} else if (deck1.checkForStraight(hand)) {
+  return;
+} else if (deck1.checkForThree(hand)) {
+  return;
+} else if (deck1.checkForTwoPairs(hand)) {
+  return;
+} else if (deck1.checkForPair(hand)) {
+  return;
+} else if (deck1.checkForHighCard(hand)) {
+  return;
+}
