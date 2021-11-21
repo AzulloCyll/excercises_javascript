@@ -66,8 +66,8 @@ let resultObject = (function (data) {
     let companies = [...new Set(data.map((item) => item.company))];
     let earnings = [];
 
-    let companyEarnings = 0;
     companies.forEach((company) => {
+      let companyEarnings = 0;
       data.forEach((item) => {
         if (item.company === company) {
           companyEarnings += Number(item.cost);
