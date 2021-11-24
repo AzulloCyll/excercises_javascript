@@ -63,7 +63,38 @@ let resultObject = (function (data) {
   }
 
   function companiesEarns() {
-    let companies = [...new Set(data.map((item) => item.company))];
+    let companies = [];
+    //way1
+    companies = [...new Set(data.map((item) => item.company))];
+
+    //way2
+    // data.forEach((item) => {
+    //   if (!companies.includes(item.company)) {
+    //     companies.push(item.company);
+    //   }
+    // });
+
+    //way3
+    // for (let item of data) {
+    //   if (!companies.includes(item.company)) {
+    //     companies.push(item.company);
+    //   }
+    // }
+
+    //way4
+    // for (let item in data) {
+    //   if (!companies.includes(data[item].company)) {
+    //     companies.push(data[item].company);
+    //   }
+    // }
+
+    //way5
+    // for (let i = 0; i < data.length; i++) {
+    //   if (!companies.includes(data[i].company)) {
+    //     companies.push(data[i].company);
+    //   }
+    // }
+    console.log(companies);
     let earnings = [];
 
     companies.forEach((company) => {
