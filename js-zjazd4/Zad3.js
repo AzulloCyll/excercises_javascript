@@ -53,17 +53,19 @@ let resultObject = (function (data) {
 
   function spentIn2014() {
     let sumOfCost = 0;
-    data.forEach((item) => {
-      if (item.dateYear === 2014) {
-        sumOfCost += Number(item.cost);
-      }
-    });
+
+    sumOfCost = data
+      .filter((item) => item.dateYear === 2014)
+      .reduce((prev, curr) => (prev += Number(curr.cost)), 0);
+
     sumOfCost = sumOfCost.toFixed(2);
     return sumOfCost;
   }
 
   function companiesEarns() {
     let companies = [];
+    let earnings = [];
+
     //way1
     companies = [...new Set(data.map((item) => item.company))];
 
@@ -94,18 +96,24 @@ let resultObject = (function (data) {
     //     companies.push(data[i].company);
     //   }
     // }
-    console.log(companies);
-    let earnings = [];
 
-    companies.forEach((company) => {
-      let companyEarnings = 0;
-      data.forEach((item) => {
-        if (item.company === company) {
-          companyEarnings += Number(item.cost);
-        }
-      });
-      earnings.push(companyEarnings.toFixed(2));
-    });
+    // companies.forEach((company) => {
+    //   let companyEarnings = 0;
+    //   data.forEach((item) => {
+    //     if (item.company === company) {
+    //       companyEarnings += Number(item.cost);
+    //     }
+    //   });
+    //   earnings.push(companyEarnings.toFixed(2));
+    // });
+
+    for (let company of companies) {
+      let singleCompanyEarnings = data
+        .filter((item) => item.company === company)
+        .reduce((prev, curr) => (prev += Number(curr.cost)), 0);
+      singleCompanyEarnings = singleCompanyEarnings.toFixed(2);
+      earnings.push(singleCompanyEarnings);
+    }
 
     //tworzę obiekt z macierzy companies i earnings
     let result = {};
