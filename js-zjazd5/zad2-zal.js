@@ -88,7 +88,7 @@ function solve(board) {
         }
     }
 
-    // i sprawdzamy czy kolejna wartość jest wpisana, jeśli tak, to ustawiamy wartość jako 0 
+    // i sprawdzamy czy rozwiązanie jest pełne, jeśli tak - ustawiamy wartość z powrotem na 0 i zwracamy tablice i wychodzimy z funkcji
     if (nextEmptySlot(board)[0] !== -1)
         board[row][col] = 0;
 
