@@ -348,13 +348,8 @@ let hand = [
     color: 2,
   },
   {
-<<<<<<< HEAD
     value: 1,
     color: 4,
-=======
-    value: 8,
-    color: 1,
->>>>>>> 029d1d891f430a77a4e4741ec47a2efbda48bac5
   },
 ];
 
