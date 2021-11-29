@@ -53,28 +53,67 @@ let resultObject = (function (data) {
 
   function spentIn2014() {
     let sumOfCost = 0;
-    data.forEach((item) => {
-      if (item.dateYear === 2014) {
-        sumOfCost += Number(item.cost);
-      }
-    });
+
+    sumOfCost = data
+      .filter((item) => item.dateYear === 2014)
+      .reduce((prev, curr) => (prev += Number(curr.cost)), 0);
+
     sumOfCost = sumOfCost.toFixed(2);
     return sumOfCost;
   }
 
   function companiesEarns() {
-    let companies = [...new Set(data.map((item) => item.company))];
+    let companies = [];
     let earnings = [];
 
-    let companyEarnings = 0;
-    companies.forEach((company) => {
-      data.forEach((item) => {
-        if (item.company === company) {
-          companyEarnings += Number(item.cost);
-        }
-      });
-      earnings.push(companyEarnings.toFixed(2));
-    });
+    //way1
+    companies = [...new Set(data.map((item) => item.company))];
+
+    //way2
+    // data.forEach((item) => {
+    //   if (!companies.includes(item.company)) {
+    //     companies.push(item.company);
+    //   }
+    // });
+
+    //way3
+    // for (let item of data) {
+    //   if (!companies.includes(item.company)) {
+    //     companies.push(item.company);
+    //   }
+    // }
+
+    //way4
+    // for (let item in data) {
+    //   if (!companies.includes(data[item].company)) {
+    //     companies.push(data[item].company);
+    //   }
+    // }
+
+    //way5
+    // for (let i = 0; i < data.length; i++) {
+    //   if (!companies.includes(data[i].company)) {
+    //     companies.push(data[i].company);
+    //   }
+    // }
+
+    // companies.forEach((company) => {
+    //   let companyEarnings = 0;
+    //   data.forEach((item) => {
+    //     if (item.company === company) {
+    //       companyEarnings += Number(item.cost);
+    //     }
+    //   });
+    //   earnings.push(companyEarnings.toFixed(2));
+    // });
+
+    for (let company of companies) {
+      let singleCompanyEarnings = data
+        .filter((item) => item.company === company)
+        .reduce((prev, curr) => (prev += Number(curr.cost)), 0);
+      singleCompanyEarnings = singleCompanyEarnings.toFixed(2);
+      earnings.push(singleCompanyEarnings);
+    }
 
     //tworzę obiekt z macierzy companies i earnings
     let result = {};

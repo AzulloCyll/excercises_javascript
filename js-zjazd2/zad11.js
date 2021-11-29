@@ -2,17 +2,17 @@
 
 const currentDayInPolish = () => {
   daysInPolish = [
+    "Niedziela",
     "Poniedziałek",
     "Wtorek",
     "Środa",
     "Czwartek",
     "Piątek",
     "Sobota",
-    "Niedziela",
   ];
 
   let date = new Date();
-  console.log(daysInPolish[date.getDay() - 1]);
+  console.log(daysInPolish[date.getDay()]);
 };
 
 currentDayInPolish();
