@@ -1,4 +1,4 @@
-let ammountOfSoldiers = 25; //change amount of soldiers
+let ammountOfSoldiers = 7; //change amount of soldiers
 
 let soldiers = [];
 

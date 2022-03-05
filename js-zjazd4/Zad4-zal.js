@@ -377,23 +377,14 @@ deck1.showReMappedCards(hand);
 console.log("--------------------");
 
 if (deck1.checkForRoyalFlush(hand)) {
-  return;
+  stop;
 } else if (deck1.checkForStraightFlush(hand)) {
-  return;
 } else if (deck1.checkForFour(hand)) {
-  return;
 } else if (deck1.checkForFullHouse(hand)) {
-  return;
 } else if (deck1.checkForFlush(hand)) {
-  return;
 } else if (deck1.checkForStraight(hand)) {
-  return;
 } else if (deck1.checkForThree(hand)) {
-  return;
 } else if (deck1.checkForTwoPairs(hand)) {
-  return;
 } else if (deck1.checkForPair(hand)) {
-  return;
 } else if (deck1.checkForHighCard(hand)) {
-  return;
 }
