@@ -19,25 +19,56 @@ class Host {
       console.log(
         `Correct ${number} is the number! You guessed it with ${this.guesses.length} try(ies)!`
       );
+      return "WIN";
     } else if (number >= this.secretNumber) {
       if (!this.guesses.includes(number)) {
         this.guesses.push(number);
-        console.log(`Wrong! Your number is too high`);
+        console.log(`Your number is too high`);
       } else console.log("You asked for that number yet");
+      return "HI";
     } else if (number <= this.secretNumber) {
       if (!this.guesses.includes(number)) {
         this.guesses.push(number);
-        console.log(`Wrong! Your number is too low`);
+        console.log(`Your number is too low`);
       } else console.log("You asked for that number yet!");
+      return "LO";
     }
   };
 }
 
-const host = new Host();
-host.setNumber(26); // number to guess
+class User {
+  constructor() {
+    this.min = 1;
+    this.max = 100;
+  }
 
-host.answer(50);
-host.answer(25);
-host.answer(42);
-host.answer(42);
-host.answer(26);
+  generateRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  askForNummber() {
+    this.number = this.generateRandom(this.min, this.max);
+    console.log(`Is the number is ${this.number}`);
+    let ans = host.answer(this.number);
+
+    if (ans === "HI") {
+      this.max = this.number;
+    }
+    if (ans === "LO") {
+      this.min = this.number;
+    }
+
+    if (ans === "WIN") {
+      return; // ends game
+    }
+
+    this.askForNummber();
+  }
+}
+
+const host = new Host();
+const user = new User();
+
+host.setNumber(26); // set number to guess
+
+user.askForNummber();
