@@ -3,6 +3,8 @@
 // of tries needed should be printed. It counts only as one try if they input the same number
 // multiple times consecutively. Range 1-100.
 
+const colors = require("colors")
+
 class Host {
   constructor() {
     this.secretNumber;
@@ -48,7 +50,7 @@ class User {
 
   askForNummber() {
     this.number = this.generateRandom(this.min, this.max);
-    console.log(`Is the number is ${this.number}`);
+    console.log(`Is the number is ${this.number}`.green);
     let ans = host.answer(this.number);
 
     if (ans === "HI") {
