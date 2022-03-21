@@ -6,7 +6,7 @@ const colors = require("colors");
 // multiple times consecutively. Range 1-100.
 class Host {
   constructor() {
-    this.secretNumber;
+    this.secretNumber = null;
     this.guesses = [];
   }
 
@@ -55,6 +55,7 @@ class User {
     if (ans === "HI") {
       this.max = this.number;
     }
+
     if (ans === "LO") {
       this.min = this.number;
     }
