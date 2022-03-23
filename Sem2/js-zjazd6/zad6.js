@@ -52,5 +52,5 @@ let fromPigLatinToEnglish = new Translator(
   "Hetay uickqay rownbay oxfay",
   translationEngine.ReverseFromPigLatin
 );
-t;
+
 console.log(fromPigLatinToEnglish.Translate());
