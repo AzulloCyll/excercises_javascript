@@ -20,8 +20,7 @@ class Calculation {
     if (col_m1 != row_m2) {
       return console.error("Matrices cannot be multiplied");
     } else {
-      let result = new Array(row_m1)
-        .fill(0)
+      let result = new Array(row_m1).fill(0)
         .map(() => new Array(col_m2).fill(0));
 
       for (let x = 0; x < result.length; x++) {
