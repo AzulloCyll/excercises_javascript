@@ -1,4 +1,13 @@
 //Given two strings, write a program that efficiently finds the longest common subsequence. ‘karol rolki’
+//
+//       k a r o l           s e d e s 
+//     0 0 0 0 0 0         0 0 0 0 0 0 
+//   r 0 0 0 1 0 0       s 0 1 0 0 0 0
+//   o 0 0 0 0 2 0       e 0 0 2 0 0 0
+//   l 0 0 0 0 0 3       d 0 0 0 3 0 0
+//   k 0 1 0 0 0 0       e 0 0 0 0 4 0
+//   i 0 0 0 0 0 0       s 0 0 0 0 0 5
+
 class Checker {
   constructor(text, checkMethod) {
     this.text = text;
