@@ -2,6 +2,27 @@
   box-sizing: border-box;
 }
 
+main {
+  margin: 250px;
+}
+
+main nav {
+  display: block;
+  width: 100%;
+  margin: 20px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+main nav .button {
+  padding: 10px 20px;
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+main nav .button:hover {
+  background-color: gray;
+}
+
 #board .line {
   display: block;
   width: 270px;
@@ -34,17 +55,17 @@
 }
 
 #board .line .wall {
-    background-color: grey;
-    border: 0;
+  background-color: grey;
+  border: 0;
 }
 
 #board .ball::after {
-    content: "";
-    background-color: red;
-    width: 25px;
-    height: 25px;
-    display: block;
-    border-radius: 50%;
-    position: absolute;
-    margin: 10px;
+  content: "";
+  background-color: red;
+  width: 25px;
+  height: 25px;
+  display: block;
+  border-radius: 50%;
+  position: absolute;
+  margin: 10px;
 }
