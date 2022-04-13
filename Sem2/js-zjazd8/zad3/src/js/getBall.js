@@ -11,7 +11,7 @@ function getBall(board) {
 			if (board[x][y] === "1") {
 				ballx = x;
 				bally = y;
-			
+
 				// XXX
 				// X10
 				// X00
@@ -24,28 +24,49 @@ function getBall(board) {
 					vectory = 1;
 				}
 
-				// // X00
-				// // X10
-				// // XXX
-				// if (
-				// 	board[ballx - 1][bally + 1] === "0" &&
-				// 	board[ballx - 1][bally] === "0" &&
-				// 	board[ballx][bally + 1] === "0"
-				// ) {
-				// 	vectorx = 1;
-				// 	vectory = -1;
-				// }
+				// XXX
+				// 01X
+				// 00X
+				if (
+					board[ballx][bally - 1] === "0" &&
+					board[ballx + 1][bally] === "0" &&
+					board[ballx + 1][bally - 1] === "0"
+				) {
+					vectorx = 1;
+					vectory = -1;
+				}
 
-				//dopisać reszę warunków
+				// X00
+				// X10
+				// XXX
+				if (
+					board[ballx - 1][bally + 1] === "0" &&
+					board[ballx - 1][bally] === "0" &&
+					board[ballx][bally + 1] === "0"
+				) {
+					vectorx = 1;
+					vectory = -1;
+				}
+
+				// 00X
+				// 01X
+				// XXX
+				if (
+					board[ballx - 1][bally - 1] === "0" &&
+					board[ballx - 1][bally] === "0" &&
+					board[ballx][bally - 1] === "0"
+				) {
+					vectorx = 1;
+					vectory = -1;
+				}
 			}
 		}
 	}
 
-
 	let vector = new Vector(vectorx, vectory);
 	let ball = new Ball(ballx, bally, vector);
 
-    console.log(ball);
+	console.log(ball);
 
 	return ball;
 }

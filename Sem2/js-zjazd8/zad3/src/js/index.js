@@ -18,19 +18,19 @@ class Game {
 	start() {
 		visualisation.updateBoard(board);
 
-		let move = () => {
+		const step = setInterval(() => {
 			this.board[this.ball.x][this.ball.y] = "0";
 			this.makeMove();
 			this.board[this.ball.x][this.ball.y] = "1";
 			visualisation.updateBoard(board);
-		};
-
-		const start = setInterval(move, 300);
+			if (this.isBallOnStartingPosition()) {
+				clearInterval(step);
+			}
+		}, 200);
 	}
-	
-	isBallOnStartingPosition() {
 
-			if (this.staringX === this.ball.x && this.startingY === this.ball.y) {
+	isBallOnStartingPosition() {
+		if (this.startingX === this.ball.x && this.startingY === this.ball.y) {
 			return true;
 		} else return false;
 	}
@@ -44,12 +44,6 @@ class Game {
 		if (this.board[this.ball.x + this.ball.vector.x][this.ball.y] === "X") {
 			return true;
 		} else return false;
-
-		// if (this.vector.x === -1) {
-		// 	if (this.board[this.ball.x - 1][this.ball.y] === "X") {
-		// 		return true;
-		// 	} else return false;
-		// }
 	}
 	willColideOnYAxis() {
 		if (this.board[this.ball.x][this.ball.y + this.ball.vector.y] === "X") {
@@ -62,8 +56,5 @@ let ball = getBall(board);
 let game = new Game(ball, board);
 let visualisation = new Visualiser(board);
 visualisation.updateBoard(board);
-
-// console.log(ball);
-// console.log(game);
 
 game.start();
