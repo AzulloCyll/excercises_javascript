@@ -29,7 +29,6 @@ class Visualiser {
 	updateBoard = (board) => {
 		let boardEl = document.getElementById("board");
 		boardEl.innerHTML = "";
-		console.log("updated");
 		this.createBoard(board);
 	};
 }

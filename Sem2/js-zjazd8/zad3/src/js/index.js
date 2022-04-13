@@ -5,7 +5,7 @@ import { board } from "./ExamInput";
 import { Visualiser } from "./visualiser";
 import { getBall } from "./getBall";
 
-// State: 0-stop, 1 - active, 2 - ended
+// State: 0  -stop, 1 - active, 2 - ended
 class Game {
 	constructor(ball, board) {
 		this.ball = ball;
@@ -16,30 +16,23 @@ class Game {
 	}
 
 	start() {
-		this.state = 1;
-
-		this.board[this.ball.x][this.ball.y] = "0";
-
-		this.makeMove();
-		this.makeMove();
-		this.makeMove();
-		this.makeMove();
-		this.makeMove();
-		this.makeMove();
-		this.makeMove();
-
-
-
-		this.board[this.ball.x][this.ball.y] = "1";
 		visualisation.updateBoard(board);
 
-		// do {
-		// 	this.makeMove();
-		// } while (!this.isBallOnStartingPosition());
-		this.state = 2;
+		let move = () => {
+			this.board[this.ball.x][this.ball.y] = "0";
+			this.makeMove();
+			this.board[this.ball.x][this.ball.y] = "1";
+			visualisation.updateBoard(board);
+		};
+
+		const start = setInterval(move, 300);
 	}
+	
 	isBallOnStartingPosition() {
-		// check if ball is back on starting possition; if so return true;
+
+			if (this.staringX === this.ball.x && this.startingY === this.ball.y) {
+			return true;
+		} else return false;
 	}
 	makeMove() {
 		if (this.willColideOnXAxis()) this.ball.vector.x *= -1;
@@ -48,11 +41,10 @@ class Game {
 		this.ball.move();
 	}
 	willColideOnXAxis() {
-		if (this.ball.vector.x === 1) {
-			if (this.board[this.ball.x + 1][this.ball.y] === "X") {
-				return true;
-			} else return false;
-		}
+		if (this.board[this.ball.x + this.ball.vector.x][this.ball.y] === "X") {
+			return true;
+		} else return false;
+
 		// if (this.vector.x === -1) {
 		// 	if (this.board[this.ball.x - 1][this.ball.y] === "X") {
 		// 		return true;
@@ -60,8 +52,7 @@ class Game {
 		// }
 	}
 	willColideOnYAxis() {
-		console.log(this.board[this.ball.x][this.ball.y + 1]);
-		if (this.board[this.ball.x][this.ball.y + 1] === "X") {
+		if (this.board[this.ball.x][this.ball.y + this.ball.vector.y] === "X") {
 			return true;
 		} else return false;
 	}
