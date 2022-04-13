@@ -12,8 +12,8 @@ class Ball {
 		this.vector = vector;
 	}
 	move() {
-		this.ball.x += this.vector.x;
-		this.ball.y += this.vector.y;
+		this.x += this.vector.x;
+		this.y += this.vector.y;
 	}
 }
 
