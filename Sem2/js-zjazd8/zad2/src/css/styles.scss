@@ -1,0 +1,83 @@
+main {
+	& #board {
+		display: block;
+		width: 400px;
+		height: 400px;
+
+		margin: 50px 0px 0px 50px;
+		border: 5px solid rgb(97, 97, 97);
+
+		& div {
+			border: 0;
+			display: block;
+			float: left;
+			width: 50px;
+			height: 50px;
+			background-color: black;
+			&.king::before {
+				content: "\265A";
+				position: relative;
+				display: block;
+				color: grey;
+				font-size: 50px;
+				top: -10px;
+			}
+			&.knight::before {
+				content: "\265E";
+				position: relative;
+				display: block;
+				color: grey;
+				font-size: 50px;
+				top: -10px;
+
+			}
+		}
+		& div:nth-child(1),
+		& div:nth-child(3),
+		& div:nth-child(5),
+		& div:nth-child(7),
+		& div:nth-child(10),
+		& div:nth-child(12),
+		& div:nth-child(14),
+		& div:nth-child(16),
+		& div:nth-child(17),
+		& div:nth-child(19),
+		& div:nth-child(21),
+		& div:nth-child(23),
+		& div:nth-child(26),
+		& div:nth-child(28),
+		& div:nth-child(30),
+		& div:nth-child(32),
+		& div:nth-child(33),
+		& div:nth-child(35),
+		& div:nth-child(37),
+		& div:nth-child(39),
+		& div:nth-child(42),
+		& div:nth-child(44),
+		& div:nth-child(46),
+		& div:nth-child(48),
+		& div:nth-child(49),
+		& div:nth-child(51),
+		& div:nth-child(53),
+		& div:nth-child(55),
+		& div:nth-child(58),
+		& div:nth-child(60),
+		& div:nth-child(62),
+		& div:nth-child(64) {
+			background-color: beige;
+		}
+	}
+	& .button {
+		display: inline-block;
+		padding: 10px 20px;
+		background-color: blueviolet;
+		margin: 30px 0px 0px 50px;
+		font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+			sans-serif;
+		color: white;
+		cursor: pointer;
+		&:hover {
+			background-color: rgb(72, 18, 122);
+		}
+	}
+}
