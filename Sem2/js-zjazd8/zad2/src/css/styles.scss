@@ -29,7 +29,30 @@ main {
 				color: grey;
 				font-size: 50px;
 				top: -10px;
-
+			}
+			&.queen::before {
+				content: "\265B";
+				position: relative;
+				display: block;
+				color: grey;
+				font-size: 50px;
+				top: -10px;
+			}
+			&.bishop::before {
+				content: "\265D";
+				position: relative;
+				display: block;
+				color: grey;
+				font-size: 50px;
+				top: -10px;
+			}
+			&.rook::before {
+				content: "\265C";
+				position: relative;
+				display: block;
+				color: grey;
+				font-size: 50px;
+				top: -10px;
 			}
 		}
 		& div:nth-child(1),
