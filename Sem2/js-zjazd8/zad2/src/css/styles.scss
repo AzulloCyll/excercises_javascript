@@ -1,5 +1,6 @@
 main {
 	& #board {
+		position: relative;
 		display: block;
 		width: 400px;
 		height: 400px;
@@ -102,5 +103,13 @@ main {
 		&:hover {
 			background-color: rgb(72, 18, 122);
 		}
+	}
+	& .alert {
+		position: absolute;
+		color: red;
+		left: 550px;
+		top: 100px;
+		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+		font-size: 32px;
 	}
 }

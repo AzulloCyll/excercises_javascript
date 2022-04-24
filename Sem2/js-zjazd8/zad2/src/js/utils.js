@@ -41,7 +41,24 @@ class GetRandomPlaceOnBoard {
 				x: this.x,
 				y: this.y,
 			};
-		} else return false;
+		} else {
+			console.log(
+				{ x: this.x, y: this.y },
+				"----> invalid -->",
+				this.board[this.x][this.y]
+			);
+			this.generatePosition();
+		}
+	};
+
+	generateUniquePosition = () => {
+		do {
+			this.generatePosition();
+		} while (!this.generatePosition());
+		return {
+			x: this.x,
+			y: this.y,
+		};
 	};
 }
 
