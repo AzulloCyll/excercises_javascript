@@ -39,7 +39,7 @@ class GameChess {
 		if (this.gameState) {
 			this.addFigure(board);
 
-			let beaten = this.validation.checkBeating(this.board);
+			const beaten = this.validation.checkBeating(this.board);
 
 			this.visualise.resetFrame();
 			this.visualise.drawFrame();
@@ -52,5 +52,5 @@ class GameChess {
 	};
 }
 
-let game = new GameChess();
+const game = new GameChess();
 game.start();

@@ -7,9 +7,9 @@ class RandomChessTypeGenerator {
 	}
 
 	getRandomChessType = () => {
-		let min = 0;
-		let max = this.chessTypes.length - 1;
-		let randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+		const min = 0;
+		const max = this.chessTypes.length - 1;
+		const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 		return this.chessTypes[randomNumber];
 	};
 }
@@ -20,9 +20,9 @@ class GetRandomPlaceOnBoard {
 	}
 
 	getRandom = () => {
-		let min = 0;
-		let max = this.board.length - 1;
-		let randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+		const min = 0;
+		const max = this.board.length - 1;
+		const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 		return randomNumber;
 	};
 
