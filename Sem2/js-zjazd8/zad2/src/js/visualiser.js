@@ -33,6 +33,12 @@ class Visualiser {
 		let boardEl = document.getElementById("board");
 		boardEl.innerHTML = "";
 	};
+
+	addBeaten = (x, y) => {
+		let boardEl = document.getElementById("board");
+		let field = boardEl.getElementsByTagName("div")[x * 8 + y];
+		field.classList.add("beaten");
+	};
 }
 
 export { Visualiser };

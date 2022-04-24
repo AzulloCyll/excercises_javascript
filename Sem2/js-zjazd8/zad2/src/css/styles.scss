@@ -90,6 +90,9 @@ main {
 		& div:nth-child(64) {
 			background-color: beige;
 		}
+		& div.beaten {
+			background-color: red !important;
+		}
 	}
 	& .button {
 		display: inline-block;
@@ -102,6 +105,10 @@ main {
 		cursor: pointer;
 		&:hover {
 			background-color: rgb(72, 18, 122);
+		}
+		&.disabled {
+			background-color: grey;
+			cursor:default;
 		}
 	}
 	& .alert {

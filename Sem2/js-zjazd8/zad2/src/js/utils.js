@@ -1,6 +1,9 @@
+import { chessFactory } from "./chessFactory";
+
 class RandomChessTypeGenerator {
 	constructor() {
 		this.chessTypes = ["king", "queen", "bishop", "knight", "rook"];
+		this.chessTypes = ["king", "queen"];
 	}
 
 	getRandomChessType = () => {
@@ -44,7 +47,7 @@ class GetRandomPlaceOnBoard {
 		} else {
 			console.log(
 				{ x: this.x, y: this.y },
-				"----> invalid -->",
+				"----> invalid --->",
 				this.board[this.x][this.y]
 			);
 			this.generatePosition();
@@ -62,4 +65,34 @@ class GetRandomPlaceOnBoard {
 	};
 }
 
-export { RandomChessTypeGenerator, GetRandomPlaceOnBoard };
+class ChessValidation {
+	constructor(board) {
+		this.board = board;
+	}
+
+	checkBeating = (board) => {
+		for (let i = 0; i < 8; i++) {
+			for (let j = 0; j < 8; j++) {
+				if (board[i][j] !== "0") {
+					let check = chessFactory().getCheck(board[i][j]);
+					let checkMoves = check.moves;
+					console.log(checkMoves);
+					for (let move of checkMoves) {
+						if (
+							i + move.x >= 0 &&
+							i + move.x < 8 &&
+							j + move.y >= 0 &&
+							j + move.y < 8
+						) {
+							if (board[i + move.x][j + move.y] !== "0") {
+								return { x: i + move.x, y: j + move.y };
+							}
+						}
+					}
+				}
+			}
+		}
+	};
+}
+
+export { RandomChessTypeGenerator, GetRandomPlaceOnBoard, ChessValidation };
