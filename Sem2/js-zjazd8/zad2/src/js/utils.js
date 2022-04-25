@@ -3,7 +3,7 @@ import { chessFactory } from "./chessFactory";
 class RandomChessTypeGenerator {
 	constructor() {
 		this.chessTypes = ["king", "queen", "bishop", "knight", "rook"];
-		this.chessTypes = ["king", "queen"];
+		// this.chessTypes = ["king", "queen", "bishop", "knight", "rook"];
 	}
 
 	getRandomChessType = () => {
@@ -76,7 +76,7 @@ class ChessValidation {
 				if (board[i][j] !== "0") {
 					let check = chessFactory().getCheck(board[i][j]);
 					let checkMoves = check.moves;
-					console.log(checkMoves);
+
 					for (let move of checkMoves) {
 						if (
 							i + move.x >= 0 &&
