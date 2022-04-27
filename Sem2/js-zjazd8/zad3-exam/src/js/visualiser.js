@@ -1,13 +1,12 @@
 class Visualiser {
 	constructor(board) {
 		this.board = board;
+		this.boardEl = document.getElementById("board");
 	}
 
 	createBoard = (board) => {
 		let X = board.length;
 		let Y = board[0].length;
-
-		let boardEl = document.getElementById("board");
 
 		for (let x = 0; x < X; x++) {
 			let line = document.createElement("div");
@@ -22,13 +21,12 @@ class Visualiser {
 				}
 				line.append(tile);
 			}
-			boardEl.append(line);
+			this.boardEl.append(line);
 		}
 	};
 
 	updateBoard = (board) => {
-		let boardEl = document.getElementById("board");
-		boardEl.innerHTML = "";
+		this.boardEl.innerHTML = "";
 		this.createBoard(board);
 	};
 }
