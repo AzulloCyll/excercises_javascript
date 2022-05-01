@@ -16,6 +16,8 @@ class Visualiser {
 				tile.classList.add("tile");
 				if (board[x][y] === "X") {
 					tile.classList.add("wall");
+				} else if (board[x][y] === "Y") {
+					tile.classList.add("trickywall");
 				} else if (board[x][y] === "1") {
 					tile.classList.add("ball");
 				}
