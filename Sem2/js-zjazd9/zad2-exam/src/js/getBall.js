@@ -66,8 +66,6 @@ function getBall(board) {
 	let vector = new Vector(vectorx, vectory);
 	let ball = new Ball(ballx, bally, vector);
 
-	console.log(ball);
-
 	return ball;
 }
 

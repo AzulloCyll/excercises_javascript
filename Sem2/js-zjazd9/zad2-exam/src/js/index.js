@@ -25,7 +25,6 @@ class Game {
 				}
 			}
 		}
-		console.log(arrOfY);
 		return arrOfY;
 	};
 
@@ -36,7 +35,10 @@ class Game {
 			this.board[this.ball.x][this.ball.y] = "0";
 
 			if (this.isBallonYPos(this.ball)) {
-				console.log("Y");
+				this.changeVectorDirectionOtherThanBackwards(
+					this.ball.vector.x,
+					this.ball.vector.y
+				);
 				// dopisac zmiane wektora na losowy (inny niż z powrotem)
 			}
 
@@ -108,11 +110,14 @@ class Game {
 		return random <= 5 ? -1 : 1;
 	}
 
-	changeVectorDirectionOtherThanBackwards() {
-		let x = randomDirection();
-		let y = randomDirection();
-		if (x === this.ball.vector.x * -1 && y === this.ball.vector.y * -1) {
-			this.changeVectorDirectionOtherThanBackwards();
+	changeVectorDirectionOtherThanBackwards(vectorx, vectory) {
+		this.ball.vector.x = this.randomDirection();
+		this.ball.vector.y = this.randomDirection();
+		if (
+			this.ball.vector.x === vectorx * -1 &&
+			this.ball.vector.y === vectory * -1
+		) {
+			this.changeVectorDirectionOtherThanBackwards(vectorx, vectory);
 		}
 	}
 }
