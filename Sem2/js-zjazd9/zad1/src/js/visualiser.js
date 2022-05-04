@@ -25,7 +25,15 @@ class Visualiser {
 
 	closeCard = (index) => {
 		let card = this.cards[index];
+		if (card) {
+			card.children[0].classList.remove('hidden');
+		}
+	};
+
+	pairCard = (index) => {
+		let card = this.cards[index];
 		card.children[0].classList.remove('hidden');
+		card.children[0].classList.add('pair');
 	};
 }
 

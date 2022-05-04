@@ -1,7 +1,12 @@
 class Player {
 	constructor(name) {
 		this.name = name;
-		this.memory = [];
+		this.memory = [
+			{
+				index: 0,
+				value: '00'
+			}
+		];
 	}
 
 	addToMemory = (index) => {
@@ -16,8 +21,15 @@ class Player {
 		this.memory.push(memorizedObject);
 	};
 
-	isInMemory = (index) => {
-		// checking for card in memory
+	isCardInMemory = (index) => {
+		let found = this.memory.filter((item) => item.index === index);
+		if (found.length) {
+			return true;
+		} else return false;
+	};
+
+	memory = () => {
+		return this.memory;
 	};
 }
 

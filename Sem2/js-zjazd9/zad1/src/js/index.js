@@ -12,7 +12,7 @@ console.log('hello world');
 let darek = new Player('Darek');
 let ela = new Player('Ela');
 
-let board = new Board().shuffledCards;
+let board = new Board().cards; //change this
 
 console.log(darek, ela);
 console.log(board);
@@ -24,47 +24,63 @@ class Game {
 		this.visualiser = new Visualiser(board);
 	}
 
-	getElement = () => {};
+	init = () => {
+		const button = document.getElementsByClassName('button')[0];
+		button.addEventListener('click', () => {
+			this.move();
+		});
+	};
 
 	start = () => {
 		this.visualiser.visualise();
-		let indexA, indexB;
+		this.init();
+	};
 
-		//move
-		indexA = getRandomNumber(this.board);
-		indexB = getRandomNumber(this.board);
+	move = () => {
+		this.indexA = this.getUniqueRandomIndex();
 
-		this.visualiser.openCard(indexA);
-		this.visualiser.openCard(indexB);
+		if (this.indexA) {
+			this.getCard(this.indexA);
 
-		this.player.addToMemory(indexB);
-		this.player.addToMemory(indexA);
+			this.indexB = this.getUniqueRandomIndex();
+			if (this.indexB) {
+				this.getCard(this.indexB);
+			}
+		} else {
+			this.move();
+			console.log('bummer');
+		}
+
+		if (
+			parseInt(this.board[this.indexA]) ===
+			parseInt(this.board[this.indexB])
+		) {
+			console.log(this.board[this.indexA]);
+			console.log(this.board[this.indexB]);
+
+			console.log('same');
+			this.visualiser.pairCard(this.indexA);
+			this.visualiser.pairCard(this.indexB);
+		} else {
+			// this.visualiser.closeCard(this.indexA);
+			// this.visualiser.closeCard(this.indexB);
+			console.log(this.board[this.indexA], this.board[this.indexB]);
+		}
 
 		console.log(this.player.memory);
+	};
 
-		console.log('indexA', indexA);
-		console.log('indexB', indexB);
+	getUniqueRandomIndex = () => {
+		let random = getRandomNumber(board);
 
-		console.log('board[indexA]', board[indexA]);
-		console.log('board[indexA]', board[indexB]);
+		if (!this.player.isCardInMemory(random)) {
+			return random;
+		} else this.getUniqueRandomIndex();
+	};
 
-		//move memorizing cards to function and get it there
-
-		//closing cards
-		// this.visualiser.closeCard(indexA);
-		// this.visualiser.closeCard(indexB);
-
-		// //next move
-		// indexA = this.getRandomNumber();
-		// indexB = this.getRandomNumber();
-
-		// this.visualiser.openCard(indexA);
-		// this.visualiser.openCard(indexB);
-
-		// this.player.addToMemory(indexB);
-		// this.player.addToMemory(indexA);
-
-		// this.closeCard(0);
+	getCard = (index) => {
+		this.player.addToMemory(index);
+		this.visualiser.openCard(index);
 	};
 }
 
