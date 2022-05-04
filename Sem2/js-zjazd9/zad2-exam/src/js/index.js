@@ -39,7 +39,6 @@ class Game {
 					this.ball.vector.x,
 					this.ball.vector.y
 				);
-				// dopisac zmiane wektora na losowy (inny niż z powrotem)
 			}
 
 			this.makeMove();
