@@ -3,7 +3,6 @@ import { chessFactory } from "./chessFactory";
 class RandomChessTypeGenerator {
 	constructor() {
 		this.chessTypes = ["king", "queen", "bishop", "knight", "rook"];
-		// this.chessTypes = ["king", "queen", "bishop", "knight", "rook"];
 	}
 
 	getRandomChessType = () => {
