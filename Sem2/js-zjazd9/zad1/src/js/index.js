@@ -5,6 +5,8 @@ import { Board } from './getBoard';
 import { Player } from './player';
 import { Visualiser } from './visualiser';
 
+import { getRandomNumber } from './utils';
+
 console.log('hello world');
 
 let darek = new Player('Darek');
@@ -19,69 +21,50 @@ class Game {
 	constructor(board) {
 		this.player = darek;
 		this.board = board;
-		this.visualise = new Visualiser(board).visualise;
+		this.visualiser = new Visualiser(board);
 	}
 
 	getElement = () => {};
 
-	openCard = (number) => {
-		let cards = document.getElementsByClassName('card');
-		let card = cards[number];
-		// console.log(card.children[0].classList[1]);
-		card.children[0].classList.add('hidden');
-
-		let memorizedObject = {
-			index: number,
-			value: cards[number].innerText
-		};
-
-		console.log(number);
-		this.player.addToMemory(memorizedObject);
-	};
-
-	closeCard = (number) => {
-		let cards = document.getElementsByClassName('card');
-		let card = cards[number];
-		card.children[0].classList.remove('hidden');
-	};
-
 	start = () => {
-		this.visualise();
+		this.visualiser.visualise();
 		let indexA, indexB;
 
 		//move
-		indexA = this.getRandomCard();
-		indexB = this.getRandomCard();
+		indexA = getRandomNumber(this.board);
+		indexB = getRandomNumber(this.board);
 
-		// console.log(this.player.memory);
-		console.log(board[indexA]);
-		console.log(board[indexB]);
+		this.visualiser.openCard(indexA);
+		this.visualiser.openCard(indexB);
+
+		this.player.addToMemory(indexB);
+		this.player.addToMemory(indexA);
+
+		console.log(this.player.memory);
+
+		console.log('indexA', indexA);
+		console.log('indexB', indexB);
+
+		console.log('board[indexA]', board[indexA]);
+		console.log('board[indexA]', board[indexB]);
 
 		//move memorizing cards to function and get it there
 
 		//closing cards
-		this.closeCard(indexA);
-		this.closeCard(indexB);
+		// this.visualiser.closeCard(indexA);
+		// this.visualiser.closeCard(indexB);
 
-		//next move
-		indexA = this.getRandomCard();
-		indexB = this.getRandomCard();
+		// //next move
+		// indexA = this.getRandomNumber();
+		// indexB = this.getRandomNumber();
 
-		console.log(this.player.memory);
+		// this.visualiser.openCard(indexA);
+		// this.visualiser.openCard(indexB);
 
-		//next move
-		indexA = this.getRandomCard();
-		indexB = this.getRandomCard();
-
-		console.log(this.player.memory);
+		// this.player.addToMemory(indexB);
+		// this.player.addToMemory(indexA);
 
 		// this.closeCard(0);
-	};
-
-	getRandomCard = () => {
-		let randomNumber = Math.floor(Math.random() * this.board.length);
-		this.openCard(randomNumber);
-		return randomNumber;
 	};
 }
 
