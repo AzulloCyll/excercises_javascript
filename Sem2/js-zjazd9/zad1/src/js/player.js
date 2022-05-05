@@ -5,21 +5,33 @@ class Player {
 	}
 
 	addToMemory = (index) => {
-		let cards = document.getElementsByClassName('card');
-		let card = cards[index];
+		let cards = document.getElementsByClassName("card");
 
 		let memorizedObject = {
 			index: index,
-			value: cards[index].innerText
+			value: cards[index].innerText,
 		};
 
 		this.memory.push(memorizedObject);
 	};
 
-	isCardInMemory = (index) => {
-		let found = this.memory.filter((item) => item.index === index);
-		if (found.length) {
+	isIndexRemembered = (index) => {
+		let found = this.memory.find((item) => item.index === index);
+		if (found) {
 			return true;
+		} else return false;
+	};
+
+	getElementFromMemoryByValue = (value, index) => {
+		console.log(index);
+		let found = this.memory.filter(
+			(item) =>
+				parseInt(item.value) === parseInt(value) &&
+				parseInt(item.index) !== parseInt(index)
+		);
+		console.log(found);
+		if (found) {
+			return found.index;
 		} else return false;
 	};
 

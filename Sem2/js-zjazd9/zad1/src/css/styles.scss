@@ -17,7 +17,7 @@
 		align-items: center;
 		margin: 1px;
 		background-color: lightgrey;
-		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+		font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
 			sans-serif;
 		font-size: 40px;
 		& .cover {
@@ -36,4 +36,11 @@
 			position: absolute;
 		}
 	}
+}
+
+.button {
+	margin: 30px;
+	padding: 20px 30px;
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+	font-size: 32px;
 }

@@ -1,21 +1,16 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
-import { Board } from './getBoard';
-import { Player } from './player';
-import { Visualiser } from './visualiser';
+import { Board } from "./getBoard";
+import { Player } from "./player";
+import { Visualiser } from "./visualiser";
 
-import { getRandomNumber } from './utils';
+import { getRandomNumber } from "./utils";
 
-console.log('hello world');
-
-let darek = new Player('Darek');
-let ela = new Player('Ela');
+let darek = new Player("Darek");
+let ela = new Player("Ela");
 
 let board = new Board().cards; //change this
-
-console.log(darek, ela);
-console.log(board);
 
 class Game {
 	constructor(board) {
@@ -25,9 +20,13 @@ class Game {
 	}
 
 	init = () => {
-		const button = document.getElementsByClassName('button')[0];
-		button.addEventListener('click', () => {
-			this.move();
+		const button = document.getElementsByClassName("button")[0];
+		button.addEventListener("click", () => {
+			this.moveA();
+			this.moveB();
+			this.checkPair();
+			console.log(this.player.memory);
+			// this.memoCards();
 		});
 	};
 
@@ -36,37 +35,58 @@ class Game {
 		this.init();
 	};
 
-	move = () => {
+	moveA = () => {
 		this.indexA = this.getUniqueRandomIndex();
+
 		this.getCard(this.indexA);
+		this.player.addToMemory(this.indexA);
+		this.valueA = parseInt(this.board[this.indexA]);
+	};
+
+	moveB = () => {
+		this.indexB = this.getUniqueRandomIndex();
+		this.valueB = parseInt(this.board[this.indexB]);
+
+		//kiedy element o danej value jest już w pamięci
+		if (this.player.getElementFromMemoryByValue(this.valueB, this.indexB)) {
+			this.indexB = this.player.getElementFromMemoryByValue(
+				this.valueB,
+				this.indexB
+			);
+			console.log(this.indexB);
+			this.valueB = parseInt(this.board[this.indexB]);
+			console.log("found in memory");
+		}
+
+		this.getCard(this.indexB);
+		this.player.addToMemory(this.indexB);
 	};
 
 	getUniqueRandomIndex = () => {
 		let random;
 		do {
 			random = getRandomNumber(board);
-			if (this.player.isCardInMemory(random)) {
-				console.log('Illegal index: ', random);
+			if (this.player.isIndexRemembered(random)) {
+				console.log("Illegal index: ", random);
 			}
-		} while (this.player.isCardInMemory(random));
+		} while (this.player.isIndexRemembered(random));
 		return random;
 	};
 
-	getCard = (index) => {
-		this.player.addToMemory(index);
-		this.visualiser.openCard(index);
+	checkPair = () => {
+		// console.log(this.valueA);
+		// console.log(this.valueB);
+		// console.log(this.valueA === this.valueB);
+		if (this.valueA === this.valueB) {
+			this.visualiser.pairCard(this.indexA);
+			this.visualiser.pairCard(this.indexB);
+		}
 	};
 
-	// test = () => {
-	// 	let indexes = [];
-	// 	for (let i = 0; i < 100; i++) {
-	// 		let index = getRandomNumber(board);
-	// 		indexes.push(index);
-	// 	}
-	// 	let min = Math.min(...indexes);
-	// 	console.log(this.player.isCardInMemory(min));
-	// 	this.getCard(min);
-	// };
+	getCard = (index) => {
+		// this.player.addToMemory(index);
+		this.visualiser.openCard(index);
+	};
 }
 
 let game = new Game(board);
