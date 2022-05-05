@@ -1,12 +1,7 @@
 class Player {
 	constructor(name) {
 		this.name = name;
-		this.memory = [
-			{
-				index: 0,
-				value: '00'
-			}
-		];
+		this.memory = [];
 	}
 
 	addToMemory = (index) => {

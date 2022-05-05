@@ -38,50 +38,35 @@ class Game {
 
 	move = () => {
 		this.indexA = this.getUniqueRandomIndex();
-
-		if (this.indexA) {
-			this.getCard(this.indexA);
-
-			this.indexB = this.getUniqueRandomIndex();
-			if (this.indexB) {
-				this.getCard(this.indexB);
-			}
-		} else {
-			this.move();
-			console.log('bummer');
-		}
-
-		if (
-			parseInt(this.board[this.indexA]) ===
-			parseInt(this.board[this.indexB])
-		) {
-			console.log(this.board[this.indexA]);
-			console.log(this.board[this.indexB]);
-
-			console.log('same');
-			this.visualiser.pairCard(this.indexA);
-			this.visualiser.pairCard(this.indexB);
-		} else {
-			// this.visualiser.closeCard(this.indexA);
-			// this.visualiser.closeCard(this.indexB);
-			console.log(this.board[this.indexA], this.board[this.indexB]);
-		}
-
-		console.log(this.player.memory);
+		this.getCard(this.indexA);
 	};
 
 	getUniqueRandomIndex = () => {
-		let random = getRandomNumber(board);
-
-		if (!this.player.isCardInMemory(random)) {
-			return random;
-		} else this.getUniqueRandomIndex();
+		let random;
+		do {
+			random = getRandomNumber(board);
+			if (this.player.isCardInMemory(random)) {
+				console.log('Illegal index: ', random);
+			}
+		} while (this.player.isCardInMemory(random));
+		return random;
 	};
 
 	getCard = (index) => {
 		this.player.addToMemory(index);
 		this.visualiser.openCard(index);
 	};
+
+	// test = () => {
+	// 	let indexes = [];
+	// 	for (let i = 0; i < 100; i++) {
+	// 		let index = getRandomNumber(board);
+	// 		indexes.push(index);
+	// 	}
+	// 	let min = Math.min(...indexes);
+	// 	console.log(this.player.isCardInMemory(min));
+	// 	this.getCard(min);
+	// };
 }
 
 let game = new Game(board);
