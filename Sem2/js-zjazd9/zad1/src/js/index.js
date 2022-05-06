@@ -1,14 +1,14 @@
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
-import { Board } from "./getBoard";
-import { Player } from "./player";
-import { Visualiser } from "./visualiser";
+import { Board } from './getBoard';
+import { Player } from './player';
+import { Visualiser } from './visualiser';
 
-import { getRandomNumber } from "./utils";
+import { getRandomNumber } from './utils';
 
-let darek = new Player("Darek");
-let ela = new Player("Ela");
+let darek = new Player('Darek');
+let ela = new Player('Ela');
 
 let board = new Board().cards; //change this
 
@@ -20,8 +20,8 @@ class Game {
 	}
 
 	init = () => {
-		const button = document.getElementsByClassName("button")[0];
-		button.addEventListener("click", () => {
+		const button = document.getElementsByClassName('button')[0];
+		button.addEventListener('click', () => {
 			this.moveA();
 			this.moveB();
 			this.checkPair();
@@ -37,28 +37,33 @@ class Game {
 
 	moveA = () => {
 		this.indexA = this.getUniqueRandomIndex();
-
-		this.getCard(this.indexA);
-		this.player.addToMemory(this.indexA);
 		this.valueA = parseInt(this.board[this.indexA]);
+		console.log('Got value:', this.valueA, 'on index', this.indexA);
+		this.getCard(this.indexA);
 	};
 
 	moveB = () => {
 		this.indexB = this.getUniqueRandomIndex();
 		this.valueB = parseInt(this.board[this.indexB]);
+		console.log('Got value:', this.valueB, 'on index', this.indexB);
 
+		console.log(
+			'test',
+			this.player.getElementFromMemoryByValue(this.valueB, this.indexB)
+		);
 		//kiedy element o danej value jest już w pamięci
 		if (this.player.getElementFromMemoryByValue(this.valueB, this.indexB)) {
 			this.indexB = this.player.getElementFromMemoryByValue(
 				this.valueB,
 				this.indexB
 			);
-			console.log(this.indexB);
+
 			this.valueB = parseInt(this.board[this.indexB]);
-			console.log("found in memory");
+			console.log('found in memory', this.board[this.indexB]);
 		}
 
 		this.getCard(this.indexB);
+		this.player.addToMemory(this.indexA);
 		this.player.addToMemory(this.indexB);
 	};
 
@@ -67,7 +72,7 @@ class Game {
 		do {
 			random = getRandomNumber(board);
 			if (this.player.isIndexRemembered(random)) {
-				console.log("Illegal index: ", random);
+				console.log('Illegal index: ', random);
 			}
 		} while (this.player.isIndexRemembered(random));
 		return random;
