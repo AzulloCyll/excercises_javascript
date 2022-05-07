@@ -5,11 +5,11 @@ class Player {
 	}
 
 	addToMemory = (index) => {
-		let cards = document.getElementsByClassName('card');
+		let cards = document.getElementsByClassName("card");
 
 		let memorizedObject = {
 			index: index,
-			value: cards[index].innerText
+			value: parseInt(cards[index].innerText),
 		};
 
 		this.memory.push(memorizedObject);
@@ -22,7 +22,7 @@ class Player {
 		} else return false;
 	};
 
-	getElementFromMemoryByValue = (value, index) => {
+	getElementFromMemoryByValue = (index, value) => {
 		let found = this.memory.find(
 			(item) =>
 				parseInt(item.value) === parseInt(value) &&
