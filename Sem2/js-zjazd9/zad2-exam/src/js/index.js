@@ -5,7 +5,6 @@ import { board } from "./ExamInput";
 import { Visualiser } from "./visualiser";
 import { getBall } from "./getBall";
 
-// State: 0  -stop, 1 - active, 2 - ended
 class Game {
 	constructor(ball, board) {
 		this.ball = ball;
@@ -28,40 +27,69 @@ class Game {
 		return arrOfY;
 	};
 
-	start() {
+	init = () => {
 		visualisation.updateBoard(board);
+		let button1 = document.getElementsByClassName("button")[0];
+		let button2 = document.getElementsByClassName("button")[1];
 
-		const step = setInterval(() => {
-			this.board[this.ball.x][this.ball.y] = "0";
+		button1.addEventListener("click", () => {
+			this.start();
+		});
 
-			if (this.isBallonYPos(this.ball)) {
-				this.changeVectorDirectionOtherThanBackwards(
-					this.ball.vector.x,
-					this.ball.vector.y
-				);
-			}
+		button2.addEventListener("click", () => {
+			this.restart();
+		});
+	};
 
-			this.makeMove();
-			this.board[this.ball.x][this.ball.y] = "1";
+	start() {
+		this.init();
 
-			visualisation.updateBoard(board);
+		// ma sie uruchomić tylko raz
+		if (!this.step) {
+			this.step = setInterval(() => {
+				this.board[this.ball.x][this.ball.y] = "0";
 
-			if (this.isBallOnStartingPosition()) {
-				clearInterval(step);
-			}
-		}, 200);
+				if (this.isBallonYPos(this.ball)) {
+					this.changeVectorDirectionOtherThanBackwards(
+						this.ball.vector.x,
+						this.ball.vector.y
+					);
+				}
+
+				this.makeMove();
+				this.board[this.ball.x][this.ball.y] = "1";
+				visualisation.updateBoard(board);
+
+				if (this.isBallOnStartingPosition()) {
+					this.stop();
+				}
+			}, 200);
+		}
 	}
+
+	stop = () => {
+		clearInterval(this.step);
+	};
+
+	restart = () => {
+		document.location.reload(true);
+	};
 
 	isBallonYPos = () => {
 		for (let position of this.YPositions) {
 			if (position.x === this.ball.x && position.y === this.ball.y) {
-				let newArr = this.YPositions.filter(
-					(item) => item.x !== this.ball.x && item.y !== this.ball.y
-				);
-				this.YPositions = [...newArr];
+				this.changeYPositions();
 				return true;
-			} else return false;
+			}
 		}
+	};
+
+	changeYPositions = () => {
+		let newArr = this.YPositions.filter((item) => {
+			return item.x !== this.ball.x || item.y !== this.ball.y;
+		});
+
+		this.YPositions = [...newArr];
 	};
 
 	isBallOnStartingPosition() {
@@ -126,4 +154,4 @@ let game = new Game(ball, board);
 let visualisation = new Visualiser(board);
 visualisation.updateBoard(board);
 
-game.start();
+game.init();
