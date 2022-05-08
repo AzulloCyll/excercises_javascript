@@ -22,9 +22,8 @@ class Game {
 	init = () => {
 		const button = document.getElementsByClassName("button")[0];
 		button.addEventListener("click", () => {
-			this.moveA();
-			this.moveB();
-			this.checkPair();
+			this.move();
+			// this.checkPair();
 			console.log(this.player.memory);
 		});
 	};
@@ -34,55 +33,48 @@ class Game {
 		this.init();
 	};
 
-	moveA = () => {
-		this.indexA = this.getUniqueRandomIndex();
-		this.valueA = parseInt(this.board[this.indexA]);
-		console.log("A value:", this.valueA, "on index", this.indexA);
-		this.getCard(this.indexA);
-	};
+	move = () => {
+		// wez 1 karte, sprawdz czy byla w pamieci po wartosci
+		// jesli byla, to wez druga karte z pamieci
+		// jeslo nie byla, to zapamietaj ja i
+		// wez 2 karte, i zapamietaj ja
+		// porownaj obi
 
-	moveB = () => {
-		this.indexB = this.getUniqueRandomIndex();
-		this.valueB = parseInt(this.board[this.indexB]);
+		let card1, card2;
 
-		console.log("B value:", this.valueB, "on index", this.indexB);
+		this.getUniqueCard();
+		card1 = this.card;
+		x;
 
-		//kiedy element o danej value jest już w pamięci
-		if (this.player.getElementFromMemoryByValue(this.indexA, this.valueA)) {
-			let returnedElement = this.player.getElementFromMemoryByValue(
-				this.indexA,
-				this.valueA
-			);
+		if (this.player.getFromMemory(card1)) {
+			card2 = this.player.getFromMemory(card1);
+		} else {
+			this.getUniqueCard();
+			card2 = this.card;
 
-			this.indexB = returnedElement.index;
-			this.valueB = returnedElement.value;
-
-			console.log(
-				"found in memory",
-				"value:",
-				returnedElement.value,
-				"on index",
-				returnedElement.index,
-				"----> B"
-			);
+			this.player.addToMemory(card1);
+			this.player.addToMemory(card2);
 		}
 
-		this.getCard(this.indexB);
-		this.player.addToMemory(this.indexA);
-		this.player.addToMemory(this.indexB);
+		this.getCard(card1);
+		this.getCard(card2);
 	};
 
-	getUniqueRandomIndex = () => {
-		let random;
+	getUniqueCard = () => {
 		do {
-			random = getRandomNumber(board);
-			if (this.player.isIndexRemembered(random)) {
-				console.log("Illegal index: ", random);
+			this.index = getRandomNumber(board);
+			this.value = this.board[this.index];
+			this.card = {
+				index: this.index,
+				value: parseInt(this.value),
+			};
+			if (this.player.getFromMemory(this.card)) {
+				console.log("found in memory");
 			}
-		} while (this.player.isIndexRemembered(random));
-		return random;
+		} while (this.player.getFromMemory(this.card));
 	};
 
+	//poprawic
 	checkPair = () => {
 		console.log(this.valueA, this.valueB);
 		if (this.valueA === this.valueB) {
