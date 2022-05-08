@@ -44,7 +44,6 @@ class Game {
 
 		this.getUniqueCard();
 		card1 = this.card;
-		x;
 
 		if (this.player.getFromMemory(card1)) {
 			card2 = this.player.getFromMemory(card1);
