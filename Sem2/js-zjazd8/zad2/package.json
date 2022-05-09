@@ -9,7 +9,7 @@
 	"scripts": {
 		"clean:all": "rimraf dist public .parcel-cache",
 		"build:dev": "rimraf dist && cross-env parcel src/html/*.html --open",
-		"build:prod": "rimraf public && cross-env NODE_ENV=production parcel build src/html/*.html --dist-dir public --public-url ./ --no-cache --no-source-maps --no-minify"
+		"build:prod": "rimraf public && cross-env NODE_ENV=production parcel build src/html/*.html --dist-dir public --public-url ./ --no-cache --no-source-maps"
 	},
 	"devDependencies": {
 		"@parcel/transformer-sass": "^2.0.0",

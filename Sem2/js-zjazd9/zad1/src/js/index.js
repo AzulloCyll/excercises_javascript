@@ -24,6 +24,7 @@ class Game {
 		button.addEventListener("click", () => {
 			this.move();
 			this.checkPair();
+
 			console.log(this.player.memory);
 		});
 	};
@@ -43,22 +44,27 @@ class Game {
 		let card1, card2;
 
 		// sprawdzic czy nie ma dwoch takich samych elementów
-		console.log(this.player.searchMemoryForDuplicates());
+		if (this.player.getFirstPairOfDuplicates()) {
+			let duplicates = this.player.getFirstPairOfDuplicates();
 
-		this.getUniqueCard(); //
-		card1 = this.card;
-
-		if (this.player.getFromMemoryByValue(card1)) {
-			console.log("found");
-			card2 = this.player.getFromMemoryByValue(card1);
-			this.player.addToMemory(card1);
-			this.player.addToMemory(card2);
+			card1 = duplicates[0];
+			card2 = duplicates[1];
 		} else {
-			this.getUniqueCard();
-			card2 = this.card;
+			this.getUniqueCard(); //
+			card1 = this.card;
 
-			this.player.addToMemory(card1);
-			this.player.addToMemory(card2);
+			if (this.player.getFromMemoryByValue(card1)) {
+				console.log("found");
+				card2 = this.player.getFromMemoryByValue(card1);
+				this.player.addToMemory(card1);
+				this.player.addToMemory(card2);
+			} else {
+				this.getUniqueCard();
+				card2 = this.card;
+
+				this.player.addToMemory(card1);
+				this.player.addToMemory(card2);
+			}
 		}
 
 		this.getCard(card1);
@@ -78,14 +84,12 @@ class Game {
 				value: parseInt(this.value),
 			};
 
-			// napisać sprawdzanie po indeksie i tu ma byc sprawdzanie po indeksie bo bierzemykarte nigdy bnie otwieraną
 			if (this.player.getFromMemoryByIndex(this.card)) {
 				console.log("found in memory");
 			}
 		} while (this.player.getFromMemoryByIndex(this.card));
 	};
 
-	//poprawic
 	checkPair = () => {
 		if (this.cardA.value === this.cardB.value) {
 			this.visualiser.pairCard(this.cardA);

@@ -4,8 +4,17 @@ class Player {
 		this.memory = [];
 	}
 
+	isInMemory = (card) => {
+		let found = this.memory.filter(
+			(item) => item.value === card.value && item.index === card.index
+		);
+		return found ? true : false;
+	};
+
 	addToMemory = (card) => {
-		this.memory.push(card);
+		if (this.isInMemory(card)) {
+			this.memory.push(card);
+		}
 	};
 
 	getFromMemoryByValue = (card) => {
@@ -28,13 +37,17 @@ class Player {
 		} else return false;
 	};
 
-	searchMemoryForDuplicates = () => {
-		let duplicates;
-		for (let card of this.memory) {
-			duplicates = this.memory.filter((item) => card.value === item.value);
-		}
+	getFirstPairOfDuplicates = () => {
+		let values = this.memory.map((item) => item.value);
+		let uniqueValues = [...new Set(values)];
 
-		if (duplicates && duplicates.length > 1) return duplicates;
+		for (let value of uniqueValues) {
+			let found = this.memory.filter((item) => item.value === value);
+			if (found.length === 2) {
+				return found;
+			}
+		}
+		return false;
 	};
 
 	memory = () => {
