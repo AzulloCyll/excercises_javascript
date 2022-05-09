@@ -42,11 +42,14 @@ class Game {
 
 		let card1, card2;
 
-		this.getUniqueCard();
+		this.getUniqueCard(); // 
 		card1 = this.card;
 
+		// getFromMemory by value
 		if (this.player.getFromMemory(card1)) {
+			console.log("found");
 			card2 = this.player.getFromMemory(card1);
+			this.player.addToMemory(card1)
 		} else {
 			this.getUniqueCard();
 			card2 = this.card;
@@ -57,8 +60,11 @@ class Game {
 
 		this.getCard(card1);
 		this.getCard(card2);
+
+		
 	};
 
+	// ta metoda musi byc zmieniona
 	getUniqueCard = () => {
 		do {
 			this.index = getRandomNumber(board);
@@ -67,6 +73,8 @@ class Game {
 				index: this.index,
 				value: parseInt(this.value),
 			};
+
+			// napisać sprawdzanie po indeksie i tu ma byc sprawdzanie po indeksie bo bierzemykarte nigdy bnie otwieraną
 			if (this.player.getFromMemory(this.card)) {
 				console.log("found in memory");
 			}
