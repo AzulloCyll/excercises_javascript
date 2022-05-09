@@ -26,10 +26,9 @@ class Visualiser {
 		this.cards[card.index].children[0].classList.remove("hidden");
 	};
 
-	pairCard = (index) => {
-		let card = this.cards[index];
-		card.children[0].classList.remove("hidden");
-		card.children[0].classList.add("pair");
+	pairCard = (card) => {
+		this.cards[card.index].children[0].classList.remove("hidden");
+		this.cards[card.index].children[0].classList.add("pair");
 	};
 }
 
