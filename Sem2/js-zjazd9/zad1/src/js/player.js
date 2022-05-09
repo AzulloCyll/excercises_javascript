@@ -8,6 +8,7 @@ class Player {
 		this.memory.push(card);
 	};
 
+	// getfrommemory by value
 	getFromMemory = (card) => {
 		let found = this.memory.find((item) => {
 			return item.value === card.value;
