@@ -50,6 +50,22 @@ class Player {
 		return false;
 	};
 
+	removeFromMemory = (card) => {
+		let found = this.memory.filter((item) => {
+			return !(item.value === card.value && item.index === card.index);
+		});
+
+		let foundInverse = this.memory.filter((item) => {
+			return item.value === card.value && item.index === card.index;
+		});
+
+		if (found) {
+			this.memory = [...found];
+			console.log(foundInverse);
+			return foundInverse;
+		}
+	};
+
 	memory = () => {
 		return this.memory;
 	};
