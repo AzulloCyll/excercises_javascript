@@ -61,7 +61,7 @@ class Player {
 
 		if (found) {
 			this.memory = [...found];
-			console.log(foundInverse);
+
 			return foundInverse;
 		}
 	};

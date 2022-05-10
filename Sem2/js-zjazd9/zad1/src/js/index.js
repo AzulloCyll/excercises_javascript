@@ -10,39 +10,30 @@ import { getRandomNumber } from "./utils";
 let darek = new Player("Darek");
 let ela = new Player("Ela");
 
-let board = new Board().cards; //change this
+let board = new Board().shuffledCards; //change this
 
 class Game {
 	constructor(board) {
 		this.player = darek;
 		this.board = board;
 		this.visualiser = new Visualiser(board);
-		this.pairedMemory = [
-			{
-				index: 0,
-				value: 0,
-			},
-			{
-				index: 1,
-				value: 0,
-			},
-			{
-				index: 2,
-				value: 1,
-			},
-			{
-				index: 3,
-				value: 1,
-			},
-		];
+		this.pairedMemory = [];
 	}
 
 	init = () => {
 		const button = document.getElementsByClassName("button")[0];
 		button.addEventListener("click", () => {
-			this.move();
-			this.checkPair();
-			console.log(this.pairedMemory);
+			if (this.pairedMemory.length < this.board.length) {
+				console.log(this.pairedMemory.length);
+				this.move();
+				let isPair = this.checkPair();
+				if (!isPair) {
+					setTimeout(() => {
+						this.visualiser.closeCard(this.cardA);
+						this.visualiser.closeCard(this.cardB);
+					}, 1000);
+				}
+			} else console.log("game over");
 		});
 	};
 
@@ -56,7 +47,7 @@ class Game {
 		// jesli byla, to wez druga karte z pamieci
 		// jeslo nie byla, to zapamietaj ja i
 		// wez 2 karte, i zapamietaj ja
-		// porownaj obi
+		// porownaj obie
 
 		let card1, card2;
 
@@ -98,15 +89,8 @@ class Game {
 				index: this.index,
 				value: parseInt(this.value),
 			};
-
-			if (
-				this.chceckPairedMemory(this.card) ||
-				this.player.getFromMemoryByIndex(this.card)
-			) {
-				console.log("found in memory", this.card.value, this.card.index);
-			}
 		} while (
-			this.chceckPairedMemory(this.card) ||
+			this.isInPairedInMemory(this.card) ||
 			this.player.getFromMemoryByIndex(this.card)
 		);
 	};
@@ -121,12 +105,10 @@ class Game {
 
 			this.addToPaired(A[0]);
 			this.addToPaired(B[0]);
-
-			console.log(this.pairedMemory);
 		}
 	};
 
-	chceckPairedMemory = (card) => {
+	isInPairedInMemory = (card) => {
 		let found = this.pairedMemory.find((item) => item.index === card.index);
 		if (found) {
 			return true;
@@ -144,5 +126,4 @@ class Game {
 }
 
 let game = new Game(board);
-
 game.start();
