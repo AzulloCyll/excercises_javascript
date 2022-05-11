@@ -5,16 +5,46 @@ import { Board } from "./getBoard";
 import { Player } from "./player";
 import { Visualiser } from "./visualiser";
 
-import { getRandomNumber } from "./utils";
+import { getRandomNumber, getRandom } from "./utils";
 
-let darek = new Player("Darek");
-let ela = new Player("Ela");
+let board = new Board().shuffledCards;
+let shuffler = new Board().shuffleArr; //wzialem sobie metode z Board do użcia przy playersqualifier
 
-let board = new Board().shuffledCards; //change this
+let waitingPlayers = ["radek", "ela", "daniel", "ewka"];
+
+class PlayersQualifyier {
+	constructor(...players) {
+		this.playersPool = [...players];
+		this.numberOfPlayersToGet = getRandom(1, 4);
+		this.players = [];
+	}
+
+	getPlayers = () => {
+		this.playersPoolRandomised = shuffler(this.playersPool);
+		console.log(this.playersPoolRandomised);
+		let playersToPop = 4 - this.numberOfPlayersToGet;
+
+		for (let i = 0; i < playersToPop; i++) {
+			this.playersPoolRandomised.pop();
+		}
+
+		for (let player of this.playersPoolRandomised) {
+			let newPlayer = new Player(player);
+			this.players.push(newPlayer);
+		}
+		console.log("Players in game:", this.playersPoolRandomised.join(", "));
+		return this.players;
+	};
+}
+
+//get four random Player objects
+let players = new PlayersQualifyier(...waitingPlayers).getPlayers();
 
 class Game {
-	constructor(board) {
-		this.player = darek;
+	constructor(board, ...players) {
+		this.player = null;
+		this.currentPlayer = 0;
+		this.players = [...players];
 		this.board = board;
 		this.visualiser = new Visualiser(board);
 		this.pairedMemory = [];
@@ -24,7 +54,6 @@ class Game {
 		const button = document.getElementsByClassName("button")[0];
 		button.addEventListener("click", () => {
 			if (this.pairedMemory.length < this.board.length) {
-				console.log(this.pairedMemory.length);
 				this.move();
 				let isPair = this.checkPair();
 				if (!isPair) {
@@ -38,8 +67,17 @@ class Game {
 	};
 
 	start = () => {
+		this.player = this.players[0]; // pierwszy gracz --> dopisać zmiane graczy
+		console.log("FIRST:", this.player.name);
+
 		this.visualiser.visualise();
+		this.visualiser.visualisePlayers(0, ...this.players);
 		this.init();
+	};
+
+	nextPlayer = (currentPlayer, numberOfPlayers) => {
+		if (currentPlayer >= numberOfPlayers - 1) return 0;
+		return currentPlayer + 1;
 	};
 
 	move = () => {
@@ -78,6 +116,15 @@ class Game {
 
 		this.cardA = card1;
 		this.cardB = card2;
+
+		//ZMIANA GRACZA
+		this.currentPlayer = this.nextPlayer(
+			this.currentPlayer,
+			this.players.length
+		);
+
+		this.visualiser.visualisePlayers(this.currentPlayer, ...this.players);
+		this.player = this.players[this.currentPlayer];
 	};
 
 	getUniqueCard = () => {
@@ -125,5 +172,5 @@ class Game {
 	};
 }
 
-let game = new Game(board);
+let game = new Game(board, ...players);
 game.start();

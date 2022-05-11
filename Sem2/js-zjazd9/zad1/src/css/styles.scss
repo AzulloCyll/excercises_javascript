@@ -2,12 +2,44 @@
 	box-sizing: border-box;
 }
 
+main {
+	width: 1000px;
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS";
+	font-size: 26px;
+	& .scores {
+		margin: 20px;
+		display: block;
+		font-size: 26px;
+		float: left;
+		& p {
+			width: 200px;
+			display: block;
+			clear: both;
+		}
+	}
+
+	& .players {
+		display: block;
+		width: 200px;
+		float: left;
+		& .player {
+			margin: 20px;
+
+			&.active::after {
+				content: " dupa";
+				color: red;
+			}
+		}
+	}
+}
+
 #board {
 	display: block;
 	width: 612px;
 	height: 510px;
 	display: flex;
 	flex-wrap: wrap;
+	float: left;
 
 	& .card {
 		display: flex;

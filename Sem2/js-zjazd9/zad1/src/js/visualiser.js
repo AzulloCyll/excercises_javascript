@@ -3,6 +3,9 @@ class Visualiser {
 		this.board = board;
 		this.boardEl = document.getElementById("board");
 		this.cards = document.getElementsByClassName("card");
+		this.players = document.getElementsByClassName("players")[0];
+		this.playerElements = document.getElementsByClassName("player");
+		this.playerActive = 1;
 	}
 
 	visualise = () => {
@@ -16,6 +19,36 @@ class Visualiser {
 			cardEl.append(cover);
 			this.boardEl.append(cardEl);
 		}
+	};
+
+	visualisePlayers = (activePlayer, ...players) => {
+		// this.resetPlayers();
+		for (let player of players) {
+			const div = document.createElement("div");
+			const p = document.createElement("p");
+
+			div.classList.add("playerWrapper");
+			p.classList.add("player");
+			p.innerHTML = `${player.name}: ${player.score}`;
+			div.append(p);
+
+			this.players.append(div);
+
+			this.setPlayerActive(activePlayer);
+		}
+	};
+
+	resetPlayers = () => {
+		this.players.innerHTML = "";
+	};
+
+	setPlayerActive = (number) => {
+		let players = Array.from(document.getElementsByClassName("player"));
+
+		for (let player of players) {
+			player.classList.remove("active");
+		}
+		players[number].classList.add("active");
 	};
 
 	openCard = (card) => {

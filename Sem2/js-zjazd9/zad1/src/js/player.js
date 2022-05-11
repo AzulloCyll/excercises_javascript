@@ -2,6 +2,7 @@ class Player {
 	constructor(name) {
 		this.name = name;
 		this.memory = [];
+		this.score = 0;
 	}
 
 	isInMemory = (card) => {
