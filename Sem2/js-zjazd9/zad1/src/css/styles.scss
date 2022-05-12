@@ -26,7 +26,7 @@ main {
 			margin: 20px;
 
 			&.active::after {
-				content: " dupa";
+				content: " \25C4";
 				color: red;
 			}
 		}

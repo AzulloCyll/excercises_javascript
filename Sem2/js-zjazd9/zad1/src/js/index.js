@@ -21,8 +21,7 @@ class PlayersQualifyier {
 
 	getPlayers = () => {
 		this.playersPoolRandomised = shuffler(this.playersPool);
-		console.log(this.playersPoolRandomised);
-		let playersToPop = 4 - this.numberOfPlayersToGet;
+		const playersToPop = 4 - this.numberOfPlayersToGet;
 
 		for (let i = 0; i < playersToPop; i++) {
 			this.playersPoolRandomised.pop();
@@ -32,7 +31,6 @@ class PlayersQualifyier {
 			let newPlayer = new Player(player);
 			this.players.push(newPlayer);
 		}
-		console.log("Players in game:", this.playersPoolRandomised.join(", "));
 		return this.players;
 	};
 }
@@ -52,28 +50,24 @@ class Game {
 
 	init = () => {
 		const button = document.getElementsByClassName("button")[0];
+		this.player = this.players[0];
+
 		button.addEventListener("click", () => {
-			if (this.pairedMemory.length < this.board.length) {
+			if (this.pairedMemory.length <= this.board.length) { //dać inny warunek
 				this.move();
-				let isPair = this.checkPair();
-				if (!isPair) {
-					setTimeout(() => {
-						this.visualiser.closeCard(this.cardA);
-						this.visualiser.closeCard(this.cardB);
-					}, 1000);
-				}
-				this.visualiser.visualisePlayers(this.currentPlayer, ...this.players);
-				this.visualiser.setPlayerActive(this.currentPlayer);
 			} else console.log("game over");
+
+			this.currentPlayer = this.nextPlayer(
+				this.currentPlayer,
+				this.players.length
+			);
+
+			this.player = this.players[this.currentPlayer];
 		});
 	};
 
 	start = () => {
-		this.player = this.players[0]; // pierwszy gracz --> dopisać zmiane graczy
-		console.log("FIRST:", this.player.name);
-
 		this.visualiser.visualise();
-
 		this.init();
 		this.visualiser.visualisePlayers(this.currentPlayer, ...this.players);
 		this.visualiser.setPlayerActive(this.currentPlayer);
@@ -117,18 +111,18 @@ class Game {
 
 		this.getCard(card1);
 		this.getCard(card2);
-
 		this.cardA = card1;
 		this.cardB = card2;
 
-		//ZMIANA GRACZA
-		this.currentPlayer = this.nextPlayer(
-			this.currentPlayer,
-			this.players.length
-		);
+		if (!this.checkPair()) {
+			setTimeout(() => {
+				this.visualiser.closeCard(this.cardA);
+				this.visualiser.closeCard(this.cardB);
+			}, 1000);
+		}
 
 		this.visualiser.visualisePlayers(this.currentPlayer, ...this.players);
-		this.player = this.players[this.currentPlayer];
+		this.visualiser.setPlayerActive(this.currentPlayer);
 	};
 
 	getUniqueCard = () => {
@@ -156,6 +150,8 @@ class Game {
 
 			this.addToPaired(A[0]);
 			this.addToPaired(B[0]);
+
+			this.player.score += 1;
 		}
 	};
 
@@ -168,7 +164,6 @@ class Game {
 
 	addToPaired = (card) => {
 		this.pairedMemory.push(card);
-		console.log(this.pairedMemory);
 	};
 
 	getCard = (index) => {

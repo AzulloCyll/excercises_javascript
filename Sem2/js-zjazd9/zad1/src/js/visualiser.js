@@ -25,7 +25,7 @@ class Visualiser {
 		const playersElement = document.getElementsByClassName("players")[0];
 
 		for (let player of players) {
-			console.log(player);
+
 			const div = document.createElement("div");
 			const p = document.createElement("p");
 
