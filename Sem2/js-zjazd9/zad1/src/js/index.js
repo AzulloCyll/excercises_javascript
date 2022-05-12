@@ -2,40 +2,13 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 
 import { Board } from "./getBoard";
-import { Player } from "./player";
 import { Visualiser } from "./visualiser";
-
-import { getRandomNumber, getRandom } from "./utils";
+import { PlayersQualifyier } from "./qualifier";
+import { getRandomNumber } from "./utils";
 
 let board = new Board().shuffledCards;
-let shuffler = new Board().shuffleArr; //wzialem sobie metode z Board do użcia przy playersqualifier
 
 let waitingPlayers = ["radek", "ela", "daniel", "ewka"];
-
-class PlayersQualifyier {
-	constructor(...players) {
-		this.playersPool = [...players];
-		this.numberOfPlayersToGet = getRandom(1, 4);
-		this.players = [];
-	}
-
-	getPlayers = () => {
-		this.playersPoolRandomised = shuffler(this.playersPool);
-		const playersToPop = 4 - this.numberOfPlayersToGet;
-
-		for (let i = 0; i < playersToPop; i++) {
-			this.playersPoolRandomised.pop();
-		}
-
-		for (let player of this.playersPoolRandomised) {
-			let newPlayer = new Player(player);
-			this.players.push(newPlayer);
-		}
-		return this.players;
-	};
-}
-
-//get four random Player objects
 let players = new PlayersQualifyier(...waitingPlayers).getPlayers();
 
 class Game {
@@ -53,23 +26,14 @@ class Game {
 		this.player = this.players[0];
 
 		button.addEventListener("click", () => {
-			if (this.pairedMemory.length <= this.board.length) { //dać inny warunek
-				this.move();
-			} else console.log("game over");
-
-			this.currentPlayer = this.nextPlayer(
-				this.currentPlayer,
-				this.players.length
-			);
-
-			this.player = this.players[this.currentPlayer];
+			if (this.pairedMemory.length < 30) this.move();
 		});
 	};
 
 	start = () => {
 		this.visualiser.visualise();
 		this.init();
-		this.visualiser.visualisePlayers(this.currentPlayer, ...this.players);
+		this.visualiser.visualisePlayers(...this.players);
 		this.visualiser.setPlayerActive(this.currentPlayer);
 	};
 
@@ -93,7 +57,7 @@ class Game {
 			card1 = duplicates[0];
 			card2 = duplicates[1];
 		} else {
-			this.getUniqueCard(); //
+			this.getUniqueCard();
 			card1 = this.card;
 
 			if (this.player.getFromMemoryByValue(card1)) {
@@ -118,11 +82,25 @@ class Game {
 			setTimeout(() => {
 				this.visualiser.closeCard(this.cardA);
 				this.visualiser.closeCard(this.cardB);
+				this.visualiser.visualisePlayers(...this.players);
+				this.visualiser.setPlayerActive(this.currentPlayer);
+			}, 1000);
+			this.currentPlayer = this.nextPlayer(
+				this.currentPlayer,
+				this.players.length
+			);
+			this.player = this.players[this.currentPlayer];
+		} else {
+			console.log("PAIR");
+			this.player.score += 1;
+			setTimeout(() => {
+				if (this.pairedMemory.length < 30) {
+					this.move();
+				} else {
+					console.log("G A M E  O V E R");
+				}
 			}, 1000);
 		}
-
-		this.visualiser.visualisePlayers(this.currentPlayer, ...this.players);
-		this.visualiser.setPlayerActive(this.currentPlayer);
 	};
 
 	getUniqueCard = () => {
@@ -151,8 +129,9 @@ class Game {
 			this.addToPaired(A[0]);
 			this.addToPaired(B[0]);
 
-			this.player.score += 1;
+			return true;
 		}
+		return false;
 	};
 
 	isInPairedInMemory = (card) => {

@@ -3,7 +3,6 @@ class Visualiser {
 		this.board = board;
 		this.boardEl = document.getElementById("board");
 		this.cards = document.getElementsByClassName("card");
-
 		this.playerActive = 1;
 	}
 
@@ -20,12 +19,11 @@ class Visualiser {
 		}
 	};
 
-	visualisePlayers = (activePlayer, ...players) => {
+	visualisePlayers = (...players) => {
 		this.resetPlayers();
 		const playersElement = document.getElementsByClassName("players")[0];
 
 		for (let player of players) {
-
 			const div = document.createElement("div");
 			const p = document.createElement("p");
 
@@ -39,14 +37,11 @@ class Visualiser {
 	};
 
 	resetPlayers = () => {
-		const players = document.getElementsByClassName("players")[0];
-
-		players.innerHTML = "";
+		document.getElementsByClassName("players")[0].innerHTML = "";
 	};
 
 	setPlayerActive = (number) => {
-		let players = document.getElementsByClassName("player");
-		players[number].classList.add("active");
+		document.getElementsByClassName("player")[number].classList.add("active");
 	};
 
 	openCard = (card) => {
