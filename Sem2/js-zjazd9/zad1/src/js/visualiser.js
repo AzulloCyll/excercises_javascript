@@ -3,8 +3,7 @@ class Visualiser {
 		this.board = board;
 		this.boardEl = document.getElementById("board");
 		this.cards = document.getElementsByClassName("card");
-		this.players = document.getElementsByClassName("players")[0];
-		this.playerElements = document.getElementsByClassName("player");
+
 		this.playerActive = 1;
 	}
 
@@ -22,8 +21,11 @@ class Visualiser {
 	};
 
 	visualisePlayers = (activePlayer, ...players) => {
-		// this.resetPlayers();
+		this.resetPlayers();
+		const playersElement = document.getElementsByClassName("players")[0];
+
 		for (let player of players) {
+			console.log(player);
 			const div = document.createElement("div");
 			const p = document.createElement("p");
 
@@ -32,22 +34,18 @@ class Visualiser {
 			p.innerHTML = `${player.name}: ${player.score}`;
 			div.append(p);
 
-			this.players.append(div);
-
-			this.setPlayerActive(activePlayer);
+			playersElement.append(div);
 		}
 	};
 
 	resetPlayers = () => {
-		this.players.innerHTML = "";
+		const players = document.getElementsByClassName("players")[0];
+
+		players.innerHTML = "";
 	};
 
 	setPlayerActive = (number) => {
-		let players = Array.from(document.getElementsByClassName("player"));
-
-		for (let player of players) {
-			player.classList.remove("active");
-		}
+		let players = document.getElementsByClassName("player");
 		players[number].classList.add("active");
 	};
 

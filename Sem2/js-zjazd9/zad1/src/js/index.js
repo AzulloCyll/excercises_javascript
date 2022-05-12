@@ -62,6 +62,8 @@ class Game {
 						this.visualiser.closeCard(this.cardB);
 					}, 1000);
 				}
+				this.visualiser.visualisePlayers(this.currentPlayer, ...this.players);
+				this.visualiser.setPlayerActive(this.currentPlayer);
 			} else console.log("game over");
 		});
 	};
@@ -71,8 +73,10 @@ class Game {
 		console.log("FIRST:", this.player.name);
 
 		this.visualiser.visualise();
-		this.visualiser.visualisePlayers(0, ...this.players);
+
 		this.init();
+		this.visualiser.visualisePlayers(this.currentPlayer, ...this.players);
+		this.visualiser.setPlayerActive(this.currentPlayer);
 	};
 
 	nextPlayer = (currentPlayer, numberOfPlayers) => {
