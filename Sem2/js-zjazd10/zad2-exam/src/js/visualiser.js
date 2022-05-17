@@ -8,23 +8,30 @@ class Visualiser {
 		let X = board.length;
 		let Y = board[0].length;
 
+		// console.log(board[0].length);
+		// console.log(this.board.length);
+
 		for (let x = 0; x < X; x++) {
 			let line = document.createElement("div");
 			line.classList.add("line");
+			line.style.width = Y * 20 + "px";
+
 			for (let y = 0; y < Y; y++) {
 				let tile = document.createElement("div");
 				tile.classList.add("tile");
-				if (board[x][y] === "X") {
-					tile.classList.add("wall");
-				} else if (board[x][y] === "Y") {
-					tile.classList.add("trickywall");
-				} else if (board[x][y] === "1") {
-					tile.classList.add("ball");
+
+				if (board[x][y] === 0) {
+					tile.classList.add("dead");
+				}
+				if (board[x][y] === 1) {
+					tile.classList.add("live");
 				}
 				line.append(tile);
 			}
 			this.boardEl.append(line);
 		}
+
+		document.getElementById;
 	};
 
 	updateBoard = (board) => {
