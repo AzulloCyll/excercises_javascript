@@ -5,8 +5,8 @@ class Visualiser {
 	}
 
 	createBoard = (board) => {
-		let X = board.length;
-		let Y = board[0].length;
+		let X = board[0].length;
+		let Y = board.length;
 
 		// console.log(board[0].length);
 		// console.log(this.board.length);
