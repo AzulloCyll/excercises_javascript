@@ -8,9 +8,6 @@ class Visualiser {
 		let X = board[0].length;
 		let Y = board.length;
 
-		// console.log(board[0].length);
-		// console.log(this.board.length);
-
 		for (let x = 0; x < X; x++) {
 			let line = document.createElement("div");
 			line.classList.add("line");
